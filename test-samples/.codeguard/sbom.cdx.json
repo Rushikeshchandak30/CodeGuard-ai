@@ -1,0 +1,284 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:71e7837b-c16a-40a6-8b08-a5fd5fcce092",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-03-20T08:06:27.130Z",
+    "tools": [
+      {
+        "vendor": "CodeGuard AI",
+        "name": "codeguard-sbom-generator",
+        "version": "0.3.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "test-vulnerable-project",
+      "version": "1.0.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lodash@4.17.23",
+      "name": "lodash",
+      "version": "4.17.23",
+      "purl": "pkg:npm/lodash@4.17.23",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/express@5.0.0",
+      "name": "express",
+      "version": "5.0.0",
+      "purl": "pkg:npm/express@5.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/axios@latest",
+      "name": "axios",
+      "version": "latest",
+      "purl": "pkg:npm/axios@latest",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/minimist@0.2.4",
+      "name": "minimist",
+      "version": "0.2.4",
+      "purl": "pkg:npm/minimist@0.2.4",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/node-fetch@2.6.7",
+      "name": "node-fetch",
+      "version": "2.6.7",
+      "purl": "pkg:npm/node-fetch@2.6.7",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react@0.14.0",
+      "name": "react",
+      "version": "0.14.0",
+      "purl": "pkg:npm/react@0.14.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/chalk@0.1.0",
+      "name": "chalk",
+      "version": "0.1.0",
+      "purl": "pkg:npm/chalk@0.1.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/moment@2.29.4",
+      "name": "moment",
+      "version": "2.29.4",
+      "purl": "pkg:npm/moment@2.29.4",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/underscore@1.0.0",
+      "name": "underscore",
+      "version": "1.0.0",
+      "purl": "pkg:npm/underscore@1.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/async@0.1.0",
+      "name": "async",
+      "version": "0.1.0",
+      "purl": "pkg:npm/async@0.1.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/commander@0.1.0",
+      "name": "commander",
+      "version": "0.1.0",
+      "purl": "pkg:npm/commander@0.1.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/debug@2.6.9",
+      "name": "debug",
+      "version": "2.6.9",
+      "purl": "pkg:npm/debug@2.6.9",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/nonexistent-package-xyz-hallucinated@2.0.0",
+      "name": "nonexistent-package-xyz-hallucinated",
+      "version": "2.0.0",
+      "purl": "pkg:npm/nonexistent-package-xyz-hallucinated@2.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/starlette-reverse-proxy@1.0.0",
+      "name": "starlette-reverse-proxy",
+      "version": "1.0.0",
+      "purl": "pkg:npm/starlette-reverse-proxy@1.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dotenv-safe-config@1.0.0",
+      "name": "dotenv-safe-config",
+      "version": "1.0.0",
+      "purl": "pkg:npm/dotenv-safe-config@1.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/express-rate-limiter-plus@1.0.0",
+      "name": "express-rate-limiter-plus",
+      "version": "1.0.0",
+      "purl": "pkg:npm/express-rate-limiter-plus@1.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/jsonwebtoken-secure@1.0.0",
+      "name": "jsonwebtoken-secure",
+      "version": "1.0.0",
+      "purl": "pkg:npm/jsonwebtoken-secure@1.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/redis-cache-manager-pro@1.0.0",
+      "name": "redis-cache-manager-pro",
+      "version": "1.0.0",
+      "purl": "pkg:npm/redis-cache-manager-pro@1.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/mocha@1.0.0",
+      "name": "mocha",
+      "version": "1.0.0",
+      "purl": "pkg:npm/mocha@1.0.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/jest@0.1.0",
+      "name": "jest",
+      "version": "0.1.0",
+      "purl": "pkg:npm/jest@0.1.0",
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "dependencies": []
+}

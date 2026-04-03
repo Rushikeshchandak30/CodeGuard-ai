@@ -1,0 +1,394 @@
+{
+  "name": "codeguard-ai",
+  "displayName": "CodeGuard AI — Security Co-Pilot",
+  "description": "Real-time vulnerability and hallucinated package detection for AI-generated code. Catches CVEs and fake packages the moment AI writes an import.",
+  "version": "7.0.0",
+  "publisher": "codeguard-ai",
+  "license": "MIT",
+  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codeguard-ai/codeguard-ai"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "security",
+    "vulnerability",
+    "CVE",
+    "dependency",
+    "supply-chain",
+    "AI",
+    "copilot",
+    "slopsquatting",
+    "hallucination",
+    "provenance",
+    "sigstore",
+    "SBOM",
+    "install-gate"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:python",
+    "onLanguage:go",
+    "onLanguage:java",
+    "onLanguage:rust",
+    "onLanguage:json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codeguard.scanCurrentFile",
+        "title": "CodeGuard: Scan Current File"
+      },
+      {
+        "command": "codeguard.scanWorkspace",
+        "title": "CodeGuard: Scan Workspace Dependencies"
+      },
+      {
+        "command": "codeguard.clearCache",
+        "title": "CodeGuard: Clear Vulnerability Cache"
+      },
+      {
+        "command": "codeguard.showDashboard",
+        "title": "CodeGuard: Show Security Dashboard"
+      },
+      {
+        "command": "codeguard.askAiToFix",
+        "title": "CodeGuard: Ask AI to Fix Security Issue"
+      },
+      {
+        "command": "codeguard.showIssueDetails",
+        "title": "CodeGuard: Show Issue Details"
+      },
+      {
+        "command": "codeguard.getSecurityContext",
+        "title": "CodeGuard: Get Security Context (API)"
+      },
+      {
+        "command": "codeguard.getAiPromptContext",
+        "title": "CodeGuard: Get AI Prompt Context (API)"
+      },
+      {
+        "command": "codeguard.scanRulesFiles",
+        "title": "CodeGuard: Scan AI Config Files for Attacks"
+      },
+      {
+        "command": "codeguard.sanitizeRulesFile",
+        "title": "CodeGuard: Sanitize Rules File (Remove Hidden Unicode)"
+      },
+      {
+        "command": "codeguard.ghinStats",
+        "title": "CodeGuard: GHIN Hallucination Database Stats"
+      },
+      {
+        "command": "codeguard.checkProvenance",
+        "title": "CodeGuard: Check Package Provenance (Sigstore)"
+      },
+      {
+        "command": "codeguard.getPatchReport",
+        "title": "CodeGuard: Get Patch Report for Package"
+      },
+      {
+        "command": "codeguard.checkInstallCommand",
+        "title": "CodeGuard: Analyze Install Command (Install Gate)"
+      },
+      {
+        "command": "codeguard.runPatchAgent",
+        "title": "CodeGuard: Run Patch Agent (Auto-fix Vulnerabilities)"
+      },
+      {
+        "command": "codeguard.generateSbom",
+        "title": "CodeGuard: Generate SBOM (CycloneDX)"
+      },
+      {
+        "command": "codeguard.explainWithLlm",
+        "title": "CodeGuard: Explain Security Issue with AI"
+      },
+      {
+        "command": "codeguard.refreshTrustTree",
+        "title": "CodeGuard: Refresh Trust Tier View"
+      },
+      {
+        "command": "codeguard.showSecurityScore",
+        "title": "CodeGuard: Show Security Score"
+      },
+      {
+        "command": "codeguard.detectSbomDrift",
+        "title": "CodeGuard: Detect Dependency Drift (SBOM)"
+      },
+      {
+        "command": "codeguard.saveSbomBaseline",
+        "title": "CodeGuard: Save SBOM Baseline"
+      },
+      {
+        "command": "codeguard.scanSecrets",
+        "title": "CodeGuard: Scan for Hardcoded Secrets"
+      },
+      {
+        "command": "codeguard.scanCodeVulns",
+        "title": "CodeGuard: Scan for Code Vulnerabilities (SAST)"
+      },
+      {
+        "command": "codeguard.deepSastScan",
+        "title": "CodeGuard: Deep SAST Scan (LLM + Adversarial Verify)"
+      },
+      {
+        "command": "codeguard.taintAnalysis",
+        "title": "CodeGuard: Cross-File Taint Analysis"
+      },
+      {
+        "command": "codeguard.aiAttribution",
+        "title": "CodeGuard: AI Code Attribution Report"
+      },
+      {
+        "command": "codeguard.evaluatePolicy",
+        "title": "CodeGuard: Evaluate Security Policy"
+      },
+      {
+        "command": "codeguard.createPolicy",
+        "title": "CodeGuard: Create Default Policy File"
+      },
+      {
+        "command": "codeguard.gitRegressionScan",
+        "title": "CodeGuard: Scan Git Changes for Security Regressions"
+      },
+      {
+        "command": "codeguard.exportComplianceReport",
+        "title": "CodeGuard: Export Compliance Report (CSV/Markdown/JSON)"
+      },
+      {
+        "command": "codeguard.scanMcpServers",
+        "title": "CodeGuard: Scan MCP Server Configurations"
+      },
+      {
+        "command": "codeguard.discoverShadowAi",
+        "title": "CodeGuard: Discover Shadow AI (AI-SBOM)"
+      },
+      {
+        "command": "codeguard.exportAiSbom",
+        "title": "CodeGuard: Export AI-SBOM (JSON)"
+      }
+    ],
+    "views": {
+      "codeguard": [
+        {
+          "id": "codeguardFindings",
+          "name": "Security Findings",
+          "contextualTitle": "CodeGuard AI"
+        },
+        {
+          "id": "codeguardTrustTree",
+          "name": "Trust Tiers",
+          "contextualTitle": "CodeGuard AI"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codeguard",
+          "title": "CodeGuard AI",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "chatParticipants": [
+      {
+        "id": "codeguard-ai.security",
+        "name": "codeguard",
+        "fullName": "CodeGuard AI Security",
+        "description": "Real-time security analysis for AI-generated code. Ask about vulnerabilities, hallucinated packages, and fixes.",
+        "isSticky": false
+      }
+    ],
+    "configuration": {
+      "title": "CodeGuard AI",
+      "properties": {
+        "codeguard.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable CodeGuard AI real-time scanning."
+        },
+        "codeguard.severityThreshold": {
+          "type": "string",
+          "default": "MEDIUM",
+          "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+          "description": "Minimum severity level to show warnings. Vulns below this level are ignored."
+        },
+        "codeguard.enableHallucinationDetection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check if imported packages actually exist on their registry (slopsquatting detection)."
+        },
+        "codeguard.debounceMs": {
+          "type": "number",
+          "default": 500,
+          "description": "Milliseconds to wait after typing stops before scanning (reduces API calls)."
+        },
+        "codeguard.cacheTtlMinutes": {
+          "type": "number",
+          "default": 60,
+          "description": "How long to cache vulnerability results (in minutes)."
+        },
+        "codeguard.ignoredPackages": {
+          "type": "array",
+          "default": [],
+          "items": { "type": "string" },
+          "description": "List of package names to skip scanning (allowlist)."
+        },
+        "codeguard.enableAiFeedback": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable AI-to-AI feedback (communicate security issues back to AI assistants)."
+        },
+        "codeguard.enableCommentInjection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Inject temporary security warning comments for AI assistants to read. Only triggers for AI-generated code."
+        },
+        "codeguard.enableCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show CodeLens buttons (Ask AI to Fix, View Details) above vulnerable imports."
+        },
+        "codeguard.enableDecorations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show inline editor decorations with security warnings (visual-only, doesn't modify source)."
+        },
+        "codeguard.enableChatParticipant": {
+          "type": "boolean",
+          "default": true,
+          "description": "Register @codeguard chat participant in Copilot Chat."
+        },
+        "codeguard.enableLanguageModelApi": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use VS Code Language Model API to communicate with AI models directly."
+        },
+        "codeguard.privateRegistries": {
+          "type": "array",
+          "default": [],
+          "items": { "type": "string" },
+          "description": "Private scoped package prefixes to skip (e.g., '@mycompany/'). These won't be checked against public registries."
+        },
+        "codeguard.enableTyposquatDetection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Detect packages with names suspiciously similar to popular packages (typosquatting)."
+        },
+        "codeguard.enablePopularityCheck": {
+          "type": "boolean",
+          "default": true,
+          "description": "Flag packages with very low download counts as potentially suspicious."
+        },
+        "codeguard.aiDebounceMs": {
+          "type": "number",
+          "default": 100,
+          "description": "Debounce delay for AI-generated code (shorter = faster detection). Human typing uses the normal debounceMs."
+        },
+        "codeguard.enableInstallGate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Intercept npm/pip/cargo install commands in the terminal and analyze packages before execution."
+        },
+        "codeguard.enableRulesScanner": {
+          "type": "boolean",
+          "default": true,
+          "description": "Scan .cursorrules, copilot-instructions.md, .windsurfrules and other AI config files for hidden attacks."
+        },
+        "codeguard.enableGhin": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the Global Hallucination Intelligence Network (GHIN) local database."
+        },
+        "codeguard.enableGhinCloudSync": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt-in: anonymously contribute and receive hallucination data from the GHIN cloud network. Only package names are shared."
+        },
+        "codeguard.enableProvenanceCheck": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check npm Sigstore provenance and PyPI PEP 740 attestations for package supply chain verification."
+        },
+        "codeguard.enableAutoPatch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically suggest patches and safe versions using OSV.dev, GitHub Advisory, and registry data."
+        },
+        "codeguard.enableScriptAnalysis": {
+          "type": "boolean",
+          "default": true,
+          "description": "Analyze package install scripts (preinstall/postinstall) for suspicious behavior before execution."
+        },
+        "codeguard.enableSecretsScanner": {
+          "type": "boolean",
+          "default": true,
+          "description": "Scan source files for hardcoded secrets, API keys, tokens, and credentials."
+        },
+        "codeguard.enableCodeVulnScanner": {
+          "type": "boolean",
+          "default": true,
+          "description": "Scan source files for code vulnerability patterns (SQL injection, XSS, eval, etc.)."
+        },
+        "codeguard.enableSecurityScore": {
+          "type": "boolean",
+          "default": true,
+          "description": "Compute and display a project security posture score (0-100) in the status bar."
+        },
+        "codeguard.strictnessLevel": {
+          "type": "string",
+          "default": "warn",
+          "enum": ["audit", "warn", "enforce"],
+          "enumDescriptions": [
+            "Audit: log findings but don't block anything",
+            "Warn: show warnings and diagnostics (default)",
+            "Enforce: block installs and fail on critical findings"
+          ],
+          "description": "How strictly CodeGuard enforces security policies."
+        },
+        "codeguard.ghinApiUrl": {
+          "type": "string",
+          "default": "https://ghin-api.codeguard.dev",
+          "description": "URL of the GHIN Intelligence API. Change for self-hosted enterprise deployments."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "@types/mocha": "^10.0.6",
+    "@types/glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "glob": "^10.3.10"
+  },
+  "dependencies": {}
+}

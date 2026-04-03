@@ -1,0 +1,5 @@
+{
+    "codeguard.ignoredPackages": [
+        "yaml"
+    ]
+}

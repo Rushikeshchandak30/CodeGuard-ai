@@ -1,0 +1,61 @@
+name: CodeGuard AI CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─── Extension Build + Lint ─────────────────────────────────────────
+  extension:
+    name: Extension (Build + Lint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run compile
+      - run: npm run lint
+
+  # ─── CLI Build + Test ───────────────────────────────────────────────
+  cli:
+    name: CLI (Build + Test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: cli/package-lock.json
+
+      - run: npm ci
+        working-directory: cli
+      - run: npx tsc -p ./tsconfig.json
+        working-directory: cli
+      - run: npx mocha dist/__tests__/scanner.test.js --timeout 30000
+        working-directory: cli
+
+  # ─── Backend Build ──────────────────────────────────────────────────
+  backend:
+    name: Backend (Build + Typecheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - run: npm ci
+        working-directory: backend
+      - run: npx prisma generate
+        working-directory: backend
+      - run: npm run build
+        working-directory: backend

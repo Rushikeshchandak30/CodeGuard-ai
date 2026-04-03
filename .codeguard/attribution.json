@@ -1,0 +1,1129 @@
+{
+  "version": 1,
+  "files": {
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\checkers\\hallucination.ts": {
+      "regions": [
+        {
+          "startLine": 0,
+          "endLine": 369,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected",
+            "import-heavy"
+          ],
+          "timestamp": 1773634757202
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\extension.ts": {
+      "regions": [
+        {
+          "startLine": 1,
+          "endLine": 2,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1773989627465
+        },
+        {
+          "startLine": 43,
+          "endLine": 44,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773989549232
+        },
+        {
+          "startLine": 83,
+          "endLine": 87,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773989549232
+        },
+        {
+          "startLine": 280,
+          "endLine": 282,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773989549232
+        },
+        {
+          "startLine": 466,
+          "endLine": 467,
+          "source": "human",
+          "confidence": 0.4,
+          "signals": [
+            "multi-line-single-event"
+          ],
+          "timestamp": 1773638944728
+        },
+        {
+          "startLine": 707,
+          "endLine": 708,
+          "source": "human",
+          "confidence": 0.4,
+          "signals": [
+            "multi-line-single-event"
+          ],
+          "timestamp": 1773638944728
+        },
+        {
+          "startLine": 967,
+          "endLine": 1054,
+          "source": "ai",
+          "confidence": 0.9500000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1773989601294
+        },
+        {
+          "startLine": 1104,
+          "endLine": 1111,
+          "source": "ai",
+          "confidence": 0.9500000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1773989649992
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\intelligence\\ghin.ts": {
+      "regions": [
+        {
+          "startLine": 16,
+          "endLine": 18,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773635189832
+        },
+        {
+          "startLine": 166,
+          "endLine": 169,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773635189832
+        },
+        {
+          "startLine": 174,
+          "endLine": 174,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773635189832
+        },
+        {
+          "startLine": 176,
+          "endLine": 177,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773635189832
+        },
+        {
+          "startLine": 416,
+          "endLine": 484,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773635189832
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\test\\suite\\detector.test.ts": {
+      "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\test\\suite\\hallucination.test.ts": {
+      "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\test\\suite\\version-resolver.test.ts": {
+      "regions": [
+        {
+          "startLine": 10,
+          "endLine": 10,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1773635367574
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\checkers\\secrets-checker.ts": {
+      "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\ai\\intent-verifier.ts": {
+      "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\shield\\rules-scanner.ts": {
+      "regions": [
+        {
+          "startLine": 46,
+          "endLine": 50,
+          "source": "ai",
+          "confidence": 0.9000000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing"
+          ],
+          "timestamp": 1773989818578
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\shield\\script-analyzer.ts": {
+      "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\checkers\\provenance.ts": {
+      "regions": [
+        {
+          "startLine": 300,
+          "endLine": 301,
+          "source": "human",
+          "confidence": 0.2,
+          "signals": [
+            "multi-line-single-event"
+          ],
+          "timestamp": 1773638917436
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\cli\\src\\scanner.ts": {
+      "regions": [
+        {
+          "startLine": 23,
+          "endLine": 23,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990199937
+        },
+        {
+          "startLine": 55,
+          "endLine": 55,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990199937
+        },
+        {
+          "startLine": 80,
+          "endLine": 82,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990199937
+        },
+        {
+          "startLine": 322,
+          "endLine": 445,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773639084054
+        },
+        {
+          "startLine": 530,
+          "endLine": 530,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1773639861278
+        },
+        {
+          "startLine": 547,
+          "endLine": 550,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1773639861278
+        },
+        {
+          "startLine": 597,
+          "endLine": 602,
+          "source": "ai",
+          "confidence": 0.9500000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1773639150848
+        },
+        {
+          "startLine": 608,
+          "endLine": 612,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990199937
+        },
+        {
+          "startLine": 634,
+          "endLine": 634,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990199937
+        },
+        {
+          "startLine": 799,
+          "endLine": 921,
+          "source": "ai",
+          "confidence": 0.9500000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1773639185245
+        },
+        {
+          "startLine": 932,
+          "endLine": 1061,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990199937
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\cli\\src\\__tests__\\scanner.test.ts": {
+      "regions": [
+        {
+          "startLine": 331,
+          "endLine": 421,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990273238
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\cli\\src\\formatters\\table.ts": {
+      "regions": [
+        {
+          "startLine": 47,
+          "endLine": 48,
+          "source": "human",
+          "confidence": 0.2,
+          "signals": [
+            "multi-line-single-event"
+          ],
+          "timestamp": 1773990471699
+        },
+        {
+          "startLine": 93,
+          "endLine": 99,
+          "source": "ai",
+          "confidence": 0.9500000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1773990489720
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\shield\\mcp-scanner.ts": {
+      "regions": [
+        {
+          "startLine": 17,
+          "endLine": 17,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1773989908537
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\policy\\engine.ts": {
+      "regions": [
+        {
+          "startLine": 67,
+          "endLine": 82,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990116948
+        },
+        {
+          "startLine": 109,
+          "endLine": 114,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990116948
+        },
+        {
+          "startLine": 309,
+          "endLine": 311,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990116948
+        },
+        {
+          "startLine": 386,
+          "endLine": 398,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990116948
+        },
+        {
+          "startLine": 487,
+          "endLine": 493,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1773990116948
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\routes\\scans.ts": {
+      "regions": [
+        {
+          "startLine": 6,
+          "endLine": 7,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031957262
+        },
+        {
+          "startLine": 68,
+          "endLine": 68,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        },
+        {
+          "startLine": 71,
+          "endLine": 71,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        },
+        {
+          "startLine": 100,
+          "endLine": 103,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031957262
+        },
+        {
+          "startLine": 112,
+          "endLine": 112,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        },
+        {
+          "startLine": 143,
+          "endLine": 143,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        },
+        {
+          "startLine": 183,
+          "endLine": 184,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031957261
+        },
+        {
+          "startLine": 222,
+          "endLine": 222,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        },
+        {
+          "startLine": 224,
+          "endLine": 224,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        },
+        {
+          "startLine": 230,
+          "endLine": 230,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        },
+        {
+          "startLine": 234,
+          "endLine": 234,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1775197394062
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\routes\\teams.ts": {
+      "regions": [
+        {
+          "startLine": 36,
+          "endLine": 37,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1775197475125
+        },
+        {
+          "startLine": 86,
+          "endLine": 86,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        },
+        {
+          "startLine": 102,
+          "endLine": 102,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        },
+        {
+          "startLine": 121,
+          "endLine": 122,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        },
+        {
+          "startLine": 131,
+          "endLine": 131,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        },
+        {
+          "startLine": 147,
+          "endLine": 147,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        },
+        {
+          "startLine": 170,
+          "endLine": 171,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        },
+        {
+          "startLine": 177,
+          "endLine": 177,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        },
+        {
+          "startLine": 180,
+          "endLine": 180,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing"
+          ],
+          "timestamp": 1774031985329
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\routes\\ghin.ts": {
+      "regions": [
+        {
+          "startLine": 6,
+          "endLine": 7,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1774032001243
+        },
+        {
+          "startLine": 40,
+          "endLine": 40,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1774032001243
+        },
+        {
+          "startLine": 107,
+          "endLine": 107,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1774032105834
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\routes\\auth.ts": {
+      "regions": [
+        {
+          "startLine": 31,
+          "endLine": 32,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1774032017555
+        },
+        {
+          "startLine": 46,
+          "endLine": 49,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775195515496
+        },
+        {
+          "startLine": 53,
+          "endLine": 55,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775195515496
+        },
+        {
+          "startLine": 85,
+          "endLine": 85,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1774032095764
+        },
+        {
+          "startLine": 94,
+          "endLine": 94,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775195515496
+        },
+        {
+          "startLine": 97,
+          "endLine": 99,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775195515495
+        },
+        {
+          "startLine": 118,
+          "endLine": 186,
+          "source": "ai",
+          "confidence": 0.9500000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775196574481
+        },
+        {
+          "startLine": 260,
+          "endLine": 260,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1775197458904
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\server.ts": {
+      "regions": [
+        {
+          "startLine": 22,
+          "endLine": 23,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing",
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775044872227
+        },
+        {
+          "startLine": 83,
+          "endLine": 85,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing",
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775044872227
+        },
+        {
+          "startLine": 87,
+          "endLine": 87,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1774032028391
+        },
+        {
+          "startLine": 91,
+          "endLine": 91,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing",
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775044872227
+        },
+        {
+          "startLine": 98,
+          "endLine": 99,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing",
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775044872227
+        },
+        {
+          "startLine": 116,
+          "endLine": 116,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing",
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775044872227
+        },
+        {
+          "startLine": 125,
+          "endLine": 126,
+          "source": "ai",
+          "confidence": 0.9500000000000001,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775193490242
+        },
+        {
+          "startLine": 141,
+          "endLine": 142,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "high-speed-typing",
+            "burst-insertion",
+            "multi-line-single-event",
+            "paste-detected"
+          ],
+          "timestamp": 1775044872227
+        },
+        {
+          "startLine": 146,
+          "endLine": 146,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1775044882505
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\config.ts": {
+      "regions": [
+        {
+          "startLine": 7,
+          "endLine": 7,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1775124594655
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\frontend\\src\\App.tsx": {
+      "regions": [
+        {
+          "startLine": 0,
+          "endLine": 0,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event"
+          ],
+          "timestamp": 1775195546334
+        },
+        {
+          "startLine": 9,
+          "endLine": 10,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event"
+          ],
+          "timestamp": 1775195546334
+        },
+        {
+          "startLine": 12,
+          "endLine": 12,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event"
+          ],
+          "timestamp": 1775195546334
+        },
+        {
+          "startLine": 17,
+          "endLine": 19,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event"
+          ],
+          "timestamp": 1775195546334
+        },
+        {
+          "startLine": 25,
+          "endLine": 25,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event"
+          ],
+          "timestamp": 1775195546334
+        },
+        {
+          "startLine": 28,
+          "endLine": 28,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event"
+          ],
+          "timestamp": 1775195546334
+        },
+        {
+          "startLine": 31,
+          "endLine": 32,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "high-speed-typing",
+            "multi-line-single-event"
+          ],
+          "timestamp": 1775195546334
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\frontend\\src\\main.tsx": {
+      "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\frontend\\src\\pages\\Login.tsx": {
+      "regions": [
+        {
+          "startLine": 1,
+          "endLine": 1,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing"
+          ],
+          "timestamp": 1775196531710
+        },
+        {
+          "startLine": 4,
+          "endLine": 5,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing"
+          ],
+          "timestamp": 1775196531710
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\frontend\\src\\pages\\AuthCallback.tsx": {
+      "regions": [
+        {
+          "startLine": 0,
+          "endLine": 0,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1775196553740
+        },
+        {
+          "startLine": 3,
+          "endLine": 4,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1775196553740
+        },
+        {
+          "startLine": 8,
+          "endLine": 10,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1775196553740
+        }
+      ]
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\middleware\\auth.ts": {
+      "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\routes\\admin.ts": {
+      "regions": []
+    }
+  },
+  "vulnAttributions": [],
+  "lastUpdated": 1775198299013
+}

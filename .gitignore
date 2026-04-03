@@ -1,0 +1,24 @@
+out/
+dist/
+node_modules/
+.vscode-test/
+*.vsix
+.DS_Store
+codeguard-cache.json
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Backend
+backend/dist/
+backend/node_modules/
+backend/prisma/*.db
+
+# Logs
+logs/
+*.log
+
+# OS
+Thumbs.db

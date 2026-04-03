@@ -1,0 +1,45 @@
+#!/bin/sh
+# CodeGuard AI — Pre-commit hook
+# Install: cp cli/bin/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+# Or use with husky: npx husky add .husky/pre-commit "npx codeguard pre-commit"
+
+set -e
+
+# Find the CLI dist relative to the hook location
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Try multiple resolution paths
+if [ -f "$SCRIPT_DIR/../../cli/dist/index.js" ]; then
+  CLI="$SCRIPT_DIR/../../cli/dist/index.js"
+elif [ -f "$SCRIPT_DIR/../cli/dist/index.js" ]; then
+  CLI="$SCRIPT_DIR/../cli/dist/index.js"
+elif command -v codeguard >/dev/null 2>&1; then
+  CLI="codeguard"
+else
+  echo "[CodeGuard] CLI not found. Run 'cd cli && npm run build' first."
+  exit 0
+fi
+
+echo "[CodeGuard AI] Running pre-commit security scan..."
+
+# Get the project root (git toplevel)
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+# Run scan in pre-commit mode — exits 1 on critical/high
+if [ "$CLI" = "codeguard" ]; then
+  codeguard pre-commit --path "$PROJECT_ROOT" --no-color
+else
+  node "$CLI" pre-commit --path "$PROJECT_ROOT" --no-color
+fi
+
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "[CodeGuard AI] Commit blocked — critical or high severity findings detected."
+  echo "  Fix the issues above, or bypass with: git commit --no-verify"
+  exit 1
+fi
+
+echo "[CodeGuard AI] All clear — no critical/high findings."
+exit 0

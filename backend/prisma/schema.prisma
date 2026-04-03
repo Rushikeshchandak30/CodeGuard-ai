@@ -1,0 +1,225 @@
+// ═══════════════════════════════════════════════════════════════════════
+// CodeGuard AI — Database Schema (Prisma + Supabase PostgreSQL)
+// ═══════════════════════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Users ───────────────────────────────────────────────────────────
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String?
+  avatarUrl      String?   @map("avatar_url")
+  githubId       String?   @unique @map("github_id")
+  githubUsername  String?  @map("github_username")
+  role           String    @default("USER")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  apiKeys        ApiKey[]
+  scans          Scan[]
+  ghinReports    GhinReport[]
+  teamMembers    TeamMember[]
+  ownedTeams     Team[]
+  createdPolicies PolicyTemplate[]
+
+  @@map("users")
+}
+
+
+// ─── API Keys ────────────────────────────────────────────────────────
+
+model ApiKey {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  name        String
+  keyHash     String    @unique @map("key_hash")
+  keyPrefix   String    @map("key_prefix") // first 8 chars for display (cg_xxxx...)
+  lastUsedAt  DateTime? @map("last_used_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  revokedAt   DateTime? @map("revoked_at")
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([keyHash])
+  @@map("api_keys")
+}
+
+// ─── Teams / Organizations ───────────────────────────────────────────
+
+model Team {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  ownerId     String    @map("owner_id")
+  settings    Json?     @default("{}")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  owner       User      @relation(fields: [ownerId], references: [id])
+
+  members     TeamMember[]
+  projects    Project[]
+  webhooks    Webhook[]
+
+  @@map("teams")
+}
+
+
+model TeamMember {
+  id        String     @id @default(cuid())
+  teamId    String     @map("team_id")
+  userId    String     @map("user_id")
+  role      String     @default("MEMBER")
+  joinedAt  DateTime   @default(now()) @map("joined_at")
+
+  team      Team       @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+  @@map("team_members")
+}
+
+
+// ─── Projects ────────────────────────────────────────────────────────
+
+model Project {
+  id            String    @id @default(cuid())
+  name          String
+  teamId        String    @map("team_id")
+  repositoryUrl String?   @map("repository_url")
+  settings      Json?     @default("{}")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  team          Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  scans         Scan[]
+
+  @@unique([teamId, name])
+  @@map("projects")
+}
+
+// ─── Scan Results ────────────────────────────────────────────────────
+
+model Scan {
+  id              String      @id @default(cuid())
+  projectId       String?     @map("project_id")
+  userId          String      @map("user_id")
+  scanType        String      @map("scan_type")
+  status          String      @default("PENDING")
+  findings        Json        @default("[]")
+  metadata        Json?
+  startedAt       DateTime    @default(now()) @map("started_at")
+  completedAt     DateTime?   @map("completed_at")
+
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project         Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([userId, startedAt])
+  @@index([projectId, startedAt])
+  @@map("scans")
+}
+
+
+
+// ─── GHIN (Global Hallucination Intelligence Network) ────────────────
+
+model GhinReport {
+  id            String        @id @default(cuid())
+  packageName   String        @map("package_name")
+  ecosystem     String
+  userId        String?       @map("reporter_id")
+  reportType    String        @default("HALLUCINATION") @map("report_type")
+  confidence    Float         @default(0.5)
+  context       String?
+  metadata      Json?
+  verified      Boolean       @default(false)
+  createdAt     DateTime      @default(now()) @map("created_at")
+
+  reporter      User?         @relation(fields: [userId], references: [id])
+
+  @@index([packageName, ecosystem])
+  @@map("ghin_reports")
+}
+
+
+
+// Aggregated hallucination data — rebuilt periodically from reports
+model GhinPackage {
+  id            String      @id @default(cuid())
+  packageName   String      @map("package_name")
+  ecosystem     String
+  status        String      @default("REPORTED")
+  reportCount   Int         @default(1) @map("report_count")
+  firstSeenAt   DateTime    @default(now()) @map("first_seen_at")
+  lastSeenAt    DateTime    @default(now()) @map("last_seen_at")
+  verifiedAt    DateTime?   @map("verified_at")
+  metadata      Json?
+
+  @@unique([packageName, ecosystem])
+  @@index([status])
+  @@map("ghin_packages")
+}
+
+
+// ─── Policy Templates ────────────────────────────────────────────────
+
+model PolicyTemplate {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  rules       Json
+  isDefault   Boolean   @default(false) @map("is_default")
+  createdBy   String?   @map("created_by")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  creator     User?     @relation(fields: [createdBy], references: [id])
+
+  @@map("policy_templates")
+}
+
+// ─── Webhook Configurations ──────────────────────────────────────────
+
+model Webhook {
+  id          String        @id @default(cuid())
+  teamId      String        @map("team_id")
+  url         String
+  events      String[]
+  secret      String
+  active      Boolean       @default(true)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  team        Team          @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  deliveries  WebhookDelivery[]
+
+  @@map("webhooks")
+}
+
+model WebhookDelivery {
+  id            String    @id @default(cuid())
+  webhookId     String    @map("webhook_id")
+  event         String
+  payload       Json
+  status        String    @default("PENDING")
+  responseCode  Int?      @map("response_code")
+  responseBody  String?   @map("response_body")
+  attemptedAt   DateTime  @default(now()) @map("attempted_at")
+  deliveredAt   DateTime? @map("delivered_at")
+
+  webhook     Webhook   @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+
+  @@index([webhookId, deliveredAt])
+  @@map("webhook_deliveries")
+}

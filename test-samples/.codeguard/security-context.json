@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-03-20T08:07:00.388Z",
+  "securityScore": 5,
+  "totalScanned": 20,
+  "vulnerablePackages": [
+    {
+      "name": "underscore",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-qpx9-hpmf-5gmw"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    }
+  ],
+  "hallucinatedPackages": [
+    {
+      "name": "nonexistent-package-xyz-hallucinated",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "starlette-reverse-proxy",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "dotenv-safe-config",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "express-rate-limiter-plus",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "jsonwebtoken-secure",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "redis-cache-manager-pro",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    }
+  ],
+  "safeAlternatives": {}
+}

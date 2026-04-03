@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d2ff"/>
+      <stop offset="100%" style="stop-color:#3a7bd5"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="24" fill="url(#bg)"/>
+  <!-- Shield -->
+  <path d="M64 18 L96 34 L96 62 C96 82 82 98 64 108 C46 98 32 82 32 62 L32 34 Z" 
+        fill="none" stroke="url(#shield)" stroke-width="4" stroke-linejoin="round"/>
+  <!-- AI circuit lines inside shield -->
+  <circle cx="64" cy="56" r="8" fill="url(#shield)" opacity="0.9"/>
+  <line x1="64" y1="64" x2="64" y2="82" stroke="url(#shield)" stroke-width="3" opacity="0.7"/>
+  <line x1="56" y1="56" x2="42" y2="48" stroke="url(#shield)" stroke-width="2" opacity="0.5"/>
+  <line x1="72" y1="56" x2="86" y2="48" stroke="url(#shield)" stroke-width="2" opacity="0.5"/>
+  <line x1="56" y1="62" x2="46" y2="72" stroke="url(#shield)" stroke-width="2" opacity="0.5"/>
+  <line x1="72" y1="62" x2="82" y2="72" stroke="url(#shield)" stroke-width="2" opacity="0.5"/>
+  <!-- Small dots at circuit endpoints -->
+  <circle cx="42" cy="48" r="3" fill="url(#shield)" opacity="0.6"/>
+  <circle cx="86" cy="48" r="3" fill="url(#shield)" opacity="0.6"/>
+  <circle cx="46" cy="72" r="3" fill="url(#shield)" opacity="0.6"/>
+  <circle cx="82" cy="72" r="3" fill="url(#shield)" opacity="0.6"/>
+  <circle cx="64" cy="82" r="3" fill="url(#shield)" opacity="0.6"/>
+  <!-- Checkmark -->
+  <path d="M54 56 L62 64 L76 48" fill="none" stroke="#51cf66" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

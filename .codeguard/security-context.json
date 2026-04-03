@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-04-03T07:02:29.362Z",
+  "securityScore": 90,
+  "totalScanned": 25,
+  "vulnerablePackages": [
+    {
+      "name": "@sentry/node",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-r5w7-f542-q2j4"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    },
+    {
+      "name": "vitest",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-9crc-q9x8-hgqq"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    }
+  ],
+  "hallucinatedPackages": [],
+  "safeAlternatives": {}
+}

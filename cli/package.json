@@ -1,0 +1,32 @@
+{
+  "name": "@codeguard-ai/cli",
+  "version": "1.0.0",
+  "description": "CodeGuard AI CLI — scan projects for hallucinated packages, vulnerabilities, secrets, and policy violations from the command line or CI/CD pipelines.",
+  "main": "dist/index.js",
+  "bin": {
+    "codeguard": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json",
+    "start": "node dist/index.js",
+    "lint": "eslint src --ext ts"
+  },
+  "keywords": [
+    "security",
+    "cli",
+    "vulnerability",
+    "hallucination",
+    "supply-chain",
+    "sast",
+    "sbom",
+    "codeguard"
+  ],
+  "author": "codeguard-ai",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.11.0",
+    "mocha": "^11.7.5",
+    "typescript": "^5.3.3"
+  }
+}
