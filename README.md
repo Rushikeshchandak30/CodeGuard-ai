@@ -2,7 +2,28 @@
 
 > **Don't just scan. Shield.** The first AI-aware pre-execution developer security platform.
 
-CodeGuard AI prevents supply chain attacks, AI hallucinations, and insecure code patterns **before they enter your project** — not after. Works with Copilot, Cursor, Windsurf, and all AI coding tools.
+CodeGuard AI prevents supply chain attacks, AI hallucinations, and insecure code patterns **before they enter your project** — not after. Works with Copilot, Cursor, Windsurf, Claude Code, and all AI coding tools.
+
+---
+
+## What's new in v8.0 — 10 brand-new detection engines
+
+| # | Engine | What it catches |
+|---|---|---|
+| 1 | **MCP CVE Database** | CVE-2025-6514 `mcp-remote` RCE, CVE-2025-49596 Inspector 0-day, 9 known-bad MCP servers, risky URL patterns (tunnels, Tor, pastebin) |
+| 2 | **LLM Jailbreak Scanner** | 30+ rules: DAN/STAN/AIM personas, ChatML/Llama control-token injection, Unicode-Tags steganography, unsafe prompt concatenation (OWASP LLM01/02) |
+| 3 | **ML Model File Scanner** | Byte-level pickle exploit detection (no Python needed), Keras Lambda layers, ONNX external data, HuggingFace `trust_remote_code`, safetensors tampering |
+| 4 | **Enhanced Typosquat** | 10 signals — Levenshtein, Damerau, QWERTY adjacency, Cyrillic/Greek homoglyphs, Metaphone phonetic, suffix/prefix tricks — across 350 popular packages |
+| 5 | **Expanded Secrets** | +35 patterns: HuggingFace, Replicate, Mistral, Groq, Perplexity, xAI, DeepSeek, Azure OpenAI, Vertex AI SA, LangSmith, Pinecone, GitLab, Docker Hub, Discord, Telegram, Shopify, Datadog, + more |
+| 6 | **Maintainer Reputation** | Unstable-ownership, disposable-email, rare-publisher-recent-release, single-maintainer, missing-repo — 14 signals across npm + PyPI |
+| 7 | **Publish Anomaly Detector** | Out-of-order patches (old-major attacks), burst republish, event-stream-style dormant-then-active takeovers, version jumps |
+| 8 | **Cryptojacking Scanner** | 30 mining pool hosts + 18 miner libs + 12 patterns (XMR/BTC/ETH wallets, xmrig/minerd/ccminer, base64-PE/ELF droppers) |
+| 9 | **License Compliance** | 40+ SPDX ids across 8 categories + SPDX expression parser + Apache-vs-GPL / MIT-vs-AGPL / MIT-vs-BUSL compatibility matrix |
+| 10 | **IaC + API Security** | 35+ IaC rules (Dockerfile/K8s/Terraform, CIS-mapped) + 33 API rules (JWT alg:none, GraphQL introspection, pickle/YAML/Java/PHP deserialization, BOLA/IDOR, CORS *, mass assignment) |
+
+**Run them all:** `Ctrl+Shift+P` → `CodeGuard v8: Run All New Detection Engines`
+
+**Full details:** see [`CHANGELOG.md`](./CHANGELOG.md#800--the-best-in-world-release)
 
 ---
 

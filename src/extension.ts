@@ -45,6 +45,17 @@ import { ComplianceReportGenerator } from './reports/compliance';
 // v6 imports
 import { McpServerScanner } from './shield/mcp-scanner';
 import { ShadowAiDiscovery } from './shield/shadow-ai-discovery';
+// v8 imports — new detection engines
+import { scanMcpServersAgainstCveDb, getMcpCveDbStats, McpServerInfo } from './shield/mcp-cve-db';
+import { scanWorkspaceForJailbreaks, getJailbreakRuleStats } from './checkers/jailbreak-scanner';
+import { scanWorkspaceModels, getModelScannerStats } from './checkers/model-file-scanner';
+import { checkTyposquat, getTyposquatEngineStats } from './intelligence/typosquat-enhanced';
+import { scanFileForCryptojacking, getCryptojackScannerStats } from './checkers/cryptojacking-scanner';
+import { evaluateLicenses, getLicenseEngineStats } from './checkers/license-compliance';
+import { scanIacFile, detectIacFramework, getIacScannerStats } from './checkers/iac-scanner';
+import { scanFileForApiSec, getApiSecScannerStats } from './checkers/api-security-scanner';
+import { analyzePublishHistory, getPublishAnomalyStats } from './intelligence/publish-anomaly';
+import { getMaintainerEngineStats } from './intelligence/maintainer-reputation';
 
 let watcher: DocumentWatcher | undefined;
 let cache: Cache | undefined;
@@ -1050,6 +1061,202 @@ function activateCore(context: vscode.ExtensionContext) {
       const doc = await vscode.workspace.openTextDocument(vscode.Uri.file(outputPath));
       await vscode.window.showTextDocument(doc);
       vscode.window.showInformationMessage(`CodeGuard: AI-SBOM exported to ${outputPath}`);
+    })
+  );
+
+  // ─── v8.0 commands ────────────────────────────────────────────────────
+
+  // "Scan MCP CVE Database" — cross-check MCP servers against known CVEs
+  context.subscriptions.push(
+    vscode.commands.registerCommand('codeguard.scanMcpCves', async () => {
+      const servers: McpServerInfo[] = [];
+      const folders = vscode.workspace.workspaceFolders ?? [];
+      for (const folder of folders) {
+        const files = await vscode.workspace.findFiles(
+          new vscode.RelativePattern(folder, '**/{mcp.json,claude_desktop_config.json,.cursor/mcp.json,cline_mcp_settings.json,.vscode/mcp.json}'),
+          '**/node_modules/**',
+          50
+        );
+        for (const uri of files) {
+          try {
+            const data = JSON.parse(fs.readFileSync(uri.fsPath, 'utf8'));
+            const serverMap = data.mcpServers ?? data.servers ?? {};
+            for (const [name, cfg] of Object.entries<any>(serverMap)) {
+              servers.push({
+                name,
+                command: cfg.command,
+                args: cfg.args,
+                url: cfg.url,
+                packageName: Array.isArray(cfg.args) ? cfg.args.find((a: string) => /^@?[\w.-]+(?:\/[\w.-]+)?/.test(a)) : undefined,
+                version: cfg.version,
+              });
+            }
+          } catch {
+            // ignore malformed configs
+          }
+        }
+      }
+      const matches = scanMcpServersAgainstCveDb(servers);
+      const stats = getMcpCveDbStats();
+      const md = [
+        `# MCP CVE Scan`,
+        `Database: ${stats.cveCount} CVEs · ${stats.knownBadCount} known-bad servers · ${stats.riskyPatternCount} risky-URL patterns`,
+        `Scanned: ${servers.length} MCP server(s)`,
+        ``,
+        matches.length === 0
+          ? `✓ No matches — all MCP servers look clean.`
+          : matches.map((m) => `## ${m.severity.toUpperCase()} — ${m.title}\n**Server:** ${m.serverName}\n**Details:** ${m.description}\n**Fix:** ${m.remediation}\n**Evidence:** ${m.evidence}`).join('\n\n'),
+      ].join('\n');
+      const panel = vscode.window.createWebviewPanel('codeguardMcpCves', 'CodeGuard: MCP CVE Report', vscode.ViewColumn.One, {});
+      panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
+    })
+  );
+
+  // "Scan for LLM Jailbreaks" — scan workspace for prompt-injection patterns
+  context.subscriptions.push(
+    vscode.commands.registerCommand('codeguard.scanJailbreaks', async () => {
+      const findings = await vscode.window.withProgress(
+        { location: vscode.ProgressLocation.Notification, title: 'CodeGuard: Scanning for LLM jailbreak patterns...' },
+        () => scanWorkspaceForJailbreaks()
+      );
+      const stats = getJailbreakRuleStats();
+      const md = [
+        `# LLM Jailbreak Scan`,
+        `Rules: ${stats.total} (${Object.entries(stats.byCategory).map(([k, v]) => `${k}:${v}`).join(', ')})`,
+        `Findings: ${findings.length}`,
+        ``,
+        findings.length === 0
+          ? `✓ No jailbreak patterns detected.`
+          : findings.slice(0, 50).map((f) => `**${f.severity.toUpperCase()}** ${f.message}\n  - File: \`${f.file}:${f.line}\`\n  - Evidence: \`${f.evidence}\`\n  - Fix: ${f.remediation}`).join('\n\n'),
+      ].join('\n');
+      const panel = vscode.window.createWebviewPanel('codeguardJailbreaks', 'CodeGuard: Jailbreak Scan', vscode.ViewColumn.One, {});
+      panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
+    })
+  );
+
+  // "Scan ML Model Files" — pickle/onnx/keras/safetensors exploit scanner
+  context.subscriptions.push(
+    vscode.commands.registerCommand('codeguard.scanModelFiles', async () => {
+      const findings = await vscode.window.withProgress(
+        { location: vscode.ProgressLocation.Notification, title: 'CodeGuard: Scanning ML model files...' },
+        () => scanWorkspaceModels()
+      );
+      const stats = getModelScannerStats();
+      const md = [
+        `# ML Model File Scan`,
+        `Dangerous pickle globals: ${stats.dangerousPickleGlobals} · Unsafe-load rules: ${stats.unsafeLoadRules}`,
+        `Supported formats: ${stats.supportedFormats.join(', ')}`,
+        `Findings: ${findings.length}`,
+        ``,
+        findings.length === 0
+          ? `✓ No unsafe model files or load calls detected.`
+          : findings.slice(0, 50).map((f) => `**${f.severity.toUpperCase()}** ${f.message}\n  - File: \`${f.file}${f.line ? ':' + f.line : ''}\`\n  - Evidence: \`${f.evidence}\`\n  - Fix: ${f.remediation}`).join('\n\n'),
+      ].join('\n');
+      const panel = vscode.window.createWebviewPanel('codeguardModels', 'CodeGuard: ML Model Security', vscode.ViewColumn.One, {});
+      panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
+    })
+  );
+
+  // "Check Typosquat" — enhanced typosquat check for a single package
+  context.subscriptions.push(
+    vscode.commands.registerCommand('codeguard.checkTyposquat', async (pkg?: string) => {
+      if (!pkg) {
+        pkg = await vscode.window.showInputBox({ prompt: 'Package name to check for typosquat risk' });
+        if (!pkg) return;
+      }
+      const matches = checkTyposquat(pkg);
+      const stats = getTyposquatEngineStats();
+      if (matches.length === 0) {
+        vscode.window.showInformationMessage(`CodeGuard: "${pkg}" does not appear to be a typosquat (checked against ${stats.npmTargets + stats.pypiTargets} popular packages).`);
+        return;
+      }
+      const top = matches[0];
+      vscode.window.showWarningMessage(
+        `CodeGuard: "${pkg}" may be a typosquat of "${top.target}" (${Math.round(top.score * 100)}%). Signals: ${top.signals.join(', ')}`,
+        'View Details'
+      ).then((choice) => {
+        if (choice === 'View Details') {
+          const md = matches.map((m) => `## ${m.severity.toUpperCase()} — "${m.candidate}" → "${m.target}"\nScore: ${Math.round(m.score * 100)}/100 · Distance: ${m.distance}\nSignals: ${m.signals.join(', ')}\n${m.recommendation}`).join('\n\n');
+          const panel = vscode.window.createWebviewPanel('codeguardTyposquat', `CodeGuard: Typosquat Check — ${pkg}`, vscode.ViewColumn.One, {});
+          panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
+        }
+      });
+    })
+  );
+
+  // "Run All v8.0 Scanners" — the big unified scan
+  context.subscriptions.push(
+    vscode.commands.registerCommand('codeguard.scanAllV8', async () => {
+      const report = await vscode.window.withProgress(
+        { location: vscode.ProgressLocation.Notification, title: 'CodeGuard v8.0: Running all detection engines...' },
+        async () => {
+          const jailbreaks = await scanWorkspaceForJailbreaks();
+          const models = await scanWorkspaceModels();
+          // IaC, cryptojacking, api-sec scan over source files (light sampling — limit 500)
+          const iacFindings: any[] = [];
+          const cryptoFindings: any[] = [];
+          const apiFindings: any[] = [];
+          const folders = vscode.workspace.workspaceFolders ?? [];
+          for (const folder of folders) {
+            const files = await vscode.workspace.findFiles(
+              new vscode.RelativePattern(folder, '**/*.{js,ts,py,java,rb,go,php,cs,tf,yaml,yml,dockerfile,Dockerfile}'),
+              '**/node_modules/**,**/dist/**,**/build/**,**/.git/**,**/out/**',
+              500
+            );
+            for (const uri of files) {
+              apiFindings.push(...scanFileForApiSec(uri.fsPath));
+              cryptoFindings.push(...scanFileForCryptojacking(uri.fsPath));
+              if (detectIacFramework(uri.fsPath)) iacFindings.push(...scanIacFile(uri.fsPath));
+            }
+          }
+          return { jailbreaks, models, iacFindings, cryptoFindings, apiFindings };
+        }
+      );
+      const stats = {
+        mcpCve: getMcpCveDbStats(),
+        jailbreak: getJailbreakRuleStats(),
+        modelFile: getModelScannerStats(),
+        typosquat: getTyposquatEngineStats(),
+        crypto: getCryptojackScannerStats(),
+        license: getLicenseEngineStats(),
+        iac: getIacScannerStats(),
+        apiSec: getApiSecScannerStats(),
+        publish: getPublishAnomalyStats(),
+        maintainer: getMaintainerEngineStats(),
+      };
+      const total =
+        report.jailbreaks.length +
+        report.models.length +
+        report.iacFindings.length +
+        report.cryptoFindings.length +
+        report.apiFindings.length;
+      const md = [
+        `# CodeGuard AI v8.0 — Full Scan Report`,
+        ``,
+        `## Engine Stats`,
+        `- MCP CVE DB: ${stats.mcpCve.cveCount} CVEs, ${stats.mcpCve.knownBadCount} known-bad servers`,
+        `- Jailbreak rules: ${stats.jailbreak.total}`,
+        `- Model scanner: ${stats.modelFile.dangerousPickleGlobals} dangerous pickle globals`,
+        `- Typosquat: ${stats.typosquat.npmTargets + stats.typosquat.pypiTargets} protected packages`,
+        `- Cryptojacking: ${stats.crypto.poolHosts} pool hosts + ${stats.crypto.patternRules} patterns`,
+        `- License engine: ${stats.license.supportedLicenses} SPDX ids`,
+        `- IaC: Docker (${stats.iac.dockerfileRules}) / K8s (${stats.iac.kubernetesRules}) / Terraform (${stats.iac.terraformRules})`,
+        `- API Security: ${stats.apiSec.totalRules} rules (JWT ${stats.apiSec.jwtRules}, GraphQL ${stats.apiSec.graphqlRules}, deserialization ${stats.apiSec.deserializationRules}, API design ${stats.apiSec.apiDesignRules})`,
+        `- Publish anomaly detectors: ${stats.publish.detectorCount}`,
+        `- Maintainer reputation signals: ${stats.maintainer.signalCount}`,
+        ``,
+        `## Findings Summary`,
+        `**Total findings:** ${total}`,
+        `- LLM jailbreaks: ${report.jailbreaks.length}`,
+        `- Model file issues: ${report.models.length}`,
+        `- IaC misconfigurations: ${report.iacFindings.length}`,
+        `- Cryptojacking signals: ${report.cryptoFindings.length}`,
+        `- API security issues: ${report.apiFindings.length}`,
+        ``,
+        total === 0 ? `✓ All clear.` : `See individual scan commands for full details.`,
+      ].join('\n');
+      const panel = vscode.window.createWebviewPanel('codeguardV8', 'CodeGuard v8.0 Full Scan', vscode.ViewColumn.One, {});
+      panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
     })
   );
 
