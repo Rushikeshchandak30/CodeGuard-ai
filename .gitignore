@@ -30,3 +30,6 @@ blog-images/
 PROGRESS.md
 PRODUCT_BLUEPRINT.md
 COMPARISON.md
+
+# Temporarily exclude test files to bypass GitHub push protection
+test-samples/
