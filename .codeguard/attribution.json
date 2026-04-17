@@ -43,6 +43,20 @@
           "timestamp": 1773989549232
         },
         {
+          "startLine": 47,
+          "endLine": 58,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected",
+            "import-heavy"
+          ],
+          "timestamp": 1776418930976
+        },
+        {
           "startLine": 83,
           "endLine": 87,
           "source": "ai",
@@ -101,16 +115,12 @@
           "timestamp": 1773989601294
         },
         {
-          "startLine": 1104,
-          "endLine": 1111,
-          "source": "ai",
-          "confidence": 0.9500000000000001,
-          "signals": [
-            "burst-insertion",
-            "multi-line-single-event",
-            "paste-detected"
-          ],
-          "timestamp": 1773989649992
+          "startLine": 1107,
+          "endLine": 1107,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1776419020384
         }
       ]
     },
@@ -202,7 +212,21 @@
       ]
     },
     "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\checkers\\secrets-checker.ts": {
-      "regions": []
+      "regions": [
+        {
+          "startLine": 164,
+          "endLine": 419,
+          "source": "ai",
+          "confidence": 1,
+          "signals": [
+            "burst-insertion",
+            "multi-line-single-event",
+            "high-speed-typing",
+            "paste-detected"
+          ],
+          "timestamp": 1776418322848
+        }
+      ]
     },
     "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\src\\ai\\intent-verifier.ts": {
       "regions": []
@@ -1122,8 +1146,20 @@
     },
     "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\backend\\src\\routes\\admin.ts": {
       "regions": []
+    },
+    "c:\\Users\\rchandak\\Downloads\\codeguard-ai\\frontend\\tailwind.config.js": {
+      "regions": [
+        {
+          "startLine": 12,
+          "endLine": 13,
+          "source": "human",
+          "confidence": 0,
+          "signals": [],
+          "timestamp": 1775209480096
+        }
+      ]
     }
   },
   "vulnAttributions": [],
-  "lastUpdated": 1775198299013
+  "lastUpdated": 1776419035650
 }

@@ -1,5 +1,157 @@
 # Changelog
 
+## [8.0.0] — The "Best-in-World" Release
+
+Ten brand-new detection engines, positioning CodeGuard AI as the most
+complete AI-era security platform.
+
+### Added — AI-Specific Superpowers
+
+#### MCP CVE Database (`src/shield/mcp-cve-db.ts`)
+- Curated registry of known MCP CVEs (CVE-2025-6514 `mcp-remote` RCE,
+  CVE-2025-53110 path traversal, CVE-2025-49596 Inspector 0-day,
+  CVE-2025-52882 Claude Code WebSocket hijack, +3 more)
+- **9 known-bad MCP servers** (confirmed malicious, typosquat, abandoned,
+  suspicious origin) with provenance dates
+- Risky-URL pattern matcher (shortener, tunneling, Tor, pastebin, raw IP)
+- Semver-aware version match; extracts candidate package names from
+  `command`, `args`, and `url`
+
+#### LLM Jailbreak Scanner (`src/checkers/jailbreak-scanner.ts`)
+- **30+ rules** across 8 categories: direct jailbreak (DAN/STAN/AIM/Kevin),
+  role override, prompt leak, known payloads, unsafe concatenation, hidden
+  Unicode (zero-width, BiDi, Unicode Tags block), system-prompt tag
+  injection (ChatML / Llama control tokens), covert-action directives
+- Scans `.py`, `.js`, `.ts`, `.md`, `.json`, `.yaml`, `CLAUDE.md`,
+  `.cursorrules`, `.windsurfrules`, `copilot-instructions.md`
+- OWASP LLM Top 10 mapping (LLM01, LLM02)
+
+#### ML Model File Scanner (`src/checkers/model-file-scanner.ts`)
+- **Pickle exploit detection** at the byte level (no Python runtime):
+  parses GLOBAL/STACK_GLOBAL opcodes, matches 50+ dangerous callables
+  (`os.system`, `subprocess.*`, `builtins.eval`, `runpy.*`, `ctypes.CDLL`)
+- Handles both raw pickle and ZIP-wrapped torch models
+- **Keras Lambda-layer detection** in `.h5`/`.hdf5`/`.keras`
+- **ONNX** external-data exfiltration + custom-op domain scan
+- **safetensors** header validation + metadata hidden-Unicode check
+- **HuggingFace** `auto_map` / `trust_remote_code` detection
+- Source-code rules for `torch.load`, `pickle.load`, `joblib.load`,
+  `yaml.load`, `load_model` without `safe_mode=True`, `trust_remote_code=True`
+
+#### Enhanced Typosquat Engine (`src/intelligence/typosquat-enhanced.ts`)
+- **10-signal detection:** Levenshtein, Damerau (transposition), keyboard
+  adjacency (QWERTY map), homoglyph (Cyrillic/Greek/number-for-letter),
+  phonetic (Metaphone-lite), separator tricks, suspicious suffix
+  (`-pro`, `-official`, `-tools`, `2`, `-v2`…), prefix tricks, plural
+  flips, scope drop, case variants
+- **350+ popular npm + PyPI packages** as typosquat targets
+- Weighted scoring with severity (critical/high/medium/low) + actionable
+  recommendation strings per match
+
+#### Expanded Secrets Patterns (`src/checkers/secrets-checker.ts`)
+- **+35 new patterns** covering AI providers (HuggingFace, Replicate,
+  Cohere, Mistral/Codestral, Groq, Perplexity, Together AI, xAI Grok,
+  DeepSeek, Fireworks AI, Azure OpenAI, Vertex AI SA, AI21, Pinecone,
+  Weaviate, LangSmith), cloud (Azure Storage, Azure AD, GCP API,
+  DigitalOcean, Heroku), CI/dev (GitLab, Bitbucket, CircleCI, Docker Hub),
+  payment (Square, PayPal, Plaid), and more (Mailgun, Mailchimp, Discord,
+  Telegram, Shopify, Datadog, New Relic)
+
+### Added — Supply Chain Depth
+
+#### Maintainer Reputation (`src/intelligence/maintainer-reputation.ts`)
+- Queries npm & PyPI registry metadata for 14 signals:
+  no-maintainer / single-maintainer / disposable-email / flagged-account /
+  **unstable-ownership** (latest publisher ∉ maintainers) /
+  rare-publisher-recent-release / missing-repo / very-new-package /
+  low-downloads / short-README / …
+- Pluggable `fetchJson` + cache hooks for integration with the extension's
+  existing cache layer
+
+#### Publish Anomaly Detector (`src/intelligence/publish-anomaly.ts`)
+- 6 detectors: out-of-order patches (old-major exploit), burst publish
+  (5+ versions in 6h), dormant-then-active-with-publisher-change
+  (event-stream pattern), massive major-version jump, zero-to-1.0
+  shortcut, publisher churn
+
+#### Cryptojacking Scanner (`src/checkers/cryptojacking-scanner.ts`)
+- **30 mining pool hostnames** (Monero, BTC, ETH Classic) + **18 in-browser
+  miner libs** (Coinhive, CryptoNight, jsecoin, coinimp…) + 12 pattern
+  rules (XMR/BTC/ETH wallets, xmrig/minerd/ccminer binaries, mining
+  algorithm flags, base64-encoded PE/ELF droppers)
+- **Auto-escalates severity** when found in `package.json` install scripts
+
+#### License Compliance Engine (`src/checkers/license-compliance.ts`)
+- **40+ SPDX ids** categorized (permissive / weak-copyleft /
+  strong-copyleft / network-copyleft / commercial-restricted /
+  proprietary / public-domain / unknown)
+- SPDX expression parser (OR / AND / WITH)
+- Compatibility matrix (Apache+GPL-2, MIT+AGPL, MIT+SSPL/BUSL/Elastic)
+- Policy configurable via `.codeguard/policy.json` `licenses` block
+
+### Added — Broader SAST Coverage
+
+#### IaC Scanner (`src/checkers/iac-scanner.ts`)
+- **35+ rules** across Dockerfile (13), Kubernetes (12), Terraform (12)
+- CIS benchmark mapping (CIS-Docker 4.1/4.9/4.10, CIS-Kubernetes 5.2.*,
+  CIS-AWS 1.16/2.1.3/2.3.*/4.1)
+- Dockerfile: no USER, :latest, curl|sh, chmod 777, embedded secrets in
+  ENV, --insecure
+- K8s: privileged/hostNetwork/hostPID, runAsUser:0, NET_ADMIN/SYS_ADMIN,
+  hostPath to /etc/proc/sys/docker.sock, automountSA token, secret env
+  as plain value
+- Terraform: public S3 ACL, 0.0.0.0/0 security groups, publicly_accessible
+  DBs, unencrypted storage, wildcard IAM, hardcoded access keys, Azure
+  public blob access, GCP allUsers bindings
+
+#### API Security Scanner (`src/checkers/api-security-scanner.ts`)
+- **33 rules** unified across JWT, GraphQL, deserialization, and API design
+- **JWT:** alg:none, weak/short secret, placeholder secret, missing
+  `expiresIn`, `jwt.decode` without verify, PyJWT `verify=False`
+- **GraphQL:** introspection in prod, Playground in prod, missing depth
+  limits, batching enabled
+- **Deserialization:** pickle, YAML unsafe, Java ObjectInputStream,
+  PHP unserialize, Ruby Marshal.load, .NET BinaryFormatter, node-serialize
+- **API design:** CORS `*`, open redirect, **BOLA/IDOR** patterns (OWASP
+  API1:2023), mass assignment (Object.assign/new Model(req.body)),
+  permissive rate limits, CSRF cookie `secure:false`
+- CWE + OWASP API Top 10 mappings
+
+### New VS Code Commands
+- `CodeGuard v8: Scan MCP Servers Against CVE Database`
+- `CodeGuard v8: Scan for LLM Jailbreak Patterns`
+- `CodeGuard v8: Scan ML Model Files (Pickle/ONNX/Keras)`
+- `CodeGuard v8: Check Package for Typosquat Risk`
+- `CodeGuard v8: Run All New Detection Engines`
+
+### Changed
+- Version bumped to **8.0.0**
+- 18 new keywords added to `package.json` (MCP, jailbreak, pickle,
+  IaC, terraform, kubernetes, JWT, OWASP, etc.)
+- Description rewritten to reflect full AI-era scope
+
+### Removed
+- Obsolete build artifacts: `codeguard-ai-5.2.0.vsix`, `codeguard-ai-7.0.0.vsix`
+- One-off test script: `smoke-test-v3.js`
+- Consolidated/redundant docs: `TEAM_ONBOARDING.md`, `DEPLOYMENT.md`,
+  `PROJECT_SUMMARY.md`, `EXTENSION_BUILD.md` (their content is covered
+  by `DEPLOYMENT_GUIDE.md` / `QUICKSTART.md` / `README.md`)
+
+### Engine-Level Numbers (v8.0)
+- **7 MCP CVEs** + **9 known-bad servers** + **5 risky-URL patterns**
+- **30+ jailbreak rules** across 8 categories
+- **50+ dangerous pickle globals** + **6 unsafe-load rules**
+- **350 popular packages** protected + **26 keyboard keys** mapped +
+  **24 homoglyph groups** + **29 suspicious suffixes**
+- **60+ secret patterns** (up from 22)
+- **14 maintainer reputation signals** + **6 publish-anomaly detectors**
+- **30 mining pool hosts** + **18 miner libs** + **12 cryptojack patterns**
+- **40+ SPDX license ids** across 8 categories
+- **35+ IaC rules** across Dockerfile/K8s/Terraform
+- **33 API security rules** (JWT/GraphQL/deserialization/design)
+
+---
+
 ## [7.2.0] - 2026-04-01
 
 ### Added — Agentic Security Architecture

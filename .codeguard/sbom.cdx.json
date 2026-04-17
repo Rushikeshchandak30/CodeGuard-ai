@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:2e964dd0-dcd5-4249-81fa-450f21bffb81",
-  "version": 2,
+  "serialNumber": "urn:uuid:4c1ef974-a824-4da8-a2ed-b193381e46f8",
+  "version": 5,
   "metadata": {
-    "timestamp": "2026-04-03T09:00:16.587Z",
+    "timestamp": "2026-04-17T10:18:42.047Z",
     "tools": [
       {
         "vendor": "CodeGuard AI",
@@ -15,7 +15,7 @@
     "component": {
       "type": "application",
       "name": "codeguard-ai",
-      "version": "7.0.0"
+      "version": "8.0.0"
     }
   },
   "components": [

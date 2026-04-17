@@ -1,31 +1,160 @@
 {
-  "timestamp": "2026-04-03T07:02:29.362Z",
-  "securityScore": 90,
-  "totalScanned": 25,
+  "timestamp": "2026-04-17T10:18:04.406Z",
+  "securityScore": 0,
+  "totalScanned": 35,
   "vulnerablePackages": [
     {
-      "name": "@sentry/node",
+      "name": "lodash",
       "version": null,
       "ecosystem": "npm",
       "cves": [
-        "GHSA-r5w7-f542-q2j4"
+        "GHSA-f23m-r3pf-42rh",
+        "GHSA-r5fr-rjxr-66jc"
       ],
       "severity": "UNKNOWN",
       "fixVersion": null,
       "alternatives": []
     },
     {
-      "name": "vitest",
+      "name": "underscore",
       "version": null,
       "ecosystem": "npm",
       "cves": [
-        "GHSA-9crc-q9x8-hgqq"
+        "GHSA-qpx9-hpmf-5gmw"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    },
+    {
+      "name": "lodahs",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-hm6q-r2jc-cpqh",
+        "MAL-2025-25502"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    },
+    {
+      "name": "axois",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-wpfc-3w63-g4hm",
+        "MAL-2025-15245"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    },
+    {
+      "name": "mongose",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-894f-rw44-qrw5"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    },
+    {
+      "name": "node-ipc",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-97m3-w2cp-4xx6"
+      ],
+      "severity": "UNKNOWN",
+      "fixVersion": null,
+      "alternatives": []
+    },
+    {
+      "name": "colors",
+      "version": null,
+      "ecosystem": "npm",
+      "cves": [
+        "GHSA-5rqg-jm4f-cqx7",
+        "GHSA-gh88-3pxp-6fm8"
       ],
       "severity": "UNKNOWN",
       "fixVersion": null,
       "alternatives": []
     }
   ],
-  "hallucinatedPackages": [],
-  "safeAlternatives": {}
+  "hallucinatedPackages": [
+    {
+      "name": "nonexistent-package-xyz-hallucinated",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "starlette-reverse-proxy",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "dotenv-safe-config",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "express-rate-limiter-plus",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "jsonwebtoken-secure",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "redis-cache-manager-pro",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "requsests",
+      "ecosystem": "npm",
+      "suggestion": "request",
+      "riskLevel": "critical"
+    },
+    {
+      "name": "nump",
+      "ecosystem": "npm",
+      "suggestion": "tmp",
+      "riskLevel": "critical"
+    },
+    {
+      "name": "panads",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "official-lodash",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    },
+    {
+      "name": "real-express",
+      "ecosystem": "npm",
+      "suggestion": null,
+      "riskLevel": "critical"
+    }
+  ],
+  "safeAlternatives": {
+    "requsests": "Use \"request\" instead",
+    "nump": "Use \"tmp\" instead"
+  }
 }

@@ -1,8 +1,8 @@
 {
   "name": "codeguard-ai",
-  "displayName": "CodeGuard AI — Security Co-Pilot",
-  "description": "Real-time vulnerability and hallucinated package detection for AI-generated code. Catches CVEs and fake packages the moment AI writes an import.",
-  "version": "7.0.0",
+  "displayName": "CodeGuard AI — AI-Aware Security Platform",
+  "description": "The most complete AI-era security platform: hallucination detection, MCP CVE scanner, LLM jailbreak detection, ML model (pickle) exploit scanner, IaC/SAST, 60+ secret patterns, typosquat + cryptojacking + license compliance. Real-time, offline-capable, VS Code + CLI + GitHub Action.",
+  "version": "8.0.0",
   "publisher": "codeguard-ai",
   "license": "MIT",
   
@@ -26,12 +26,33 @@
     "supply-chain",
     "AI",
     "copilot",
+    "cursor",
+    "windsurf",
     "slopsquatting",
     "hallucination",
     "provenance",
     "sigstore",
     "SBOM",
-    "install-gate"
+    "AI-SBOM",
+    "install-gate",
+    "MCP",
+    "model-context-protocol",
+    "jailbreak",
+    "prompt-injection",
+    "LLM-security",
+    "pickle",
+    "ML-security",
+    "typosquat",
+    "cryptojacking",
+    "license-compliance",
+    "IaC",
+    "terraform",
+    "kubernetes",
+    "dockerfile",
+    "JWT",
+    "OWASP",
+    "SAST",
+    "SCA"
   ],
   "activationEvents": [
     "onStartupFinished",
@@ -179,6 +200,26 @@
       {
         "command": "codeguard.exportAiSbom",
         "title": "CodeGuard: Export AI-SBOM (JSON)"
+      },
+      {
+        "command": "codeguard.scanMcpCves",
+        "title": "CodeGuard v8: Scan MCP Servers Against CVE Database"
+      },
+      {
+        "command": "codeguard.scanJailbreaks",
+        "title": "CodeGuard v8: Scan for LLM Jailbreak Patterns"
+      },
+      {
+        "command": "codeguard.scanModelFiles",
+        "title": "CodeGuard v8: Scan ML Model Files (Pickle/ONNX/Keras)"
+      },
+      {
+        "command": "codeguard.checkTyposquat",
+        "title": "CodeGuard v8: Check Package for Typosquat Risk"
+      },
+      {
+        "command": "codeguard.scanAllV8",
+        "title": "CodeGuard v8: Run All New Detection Engines"
       }
     ],
     "views": {
@@ -362,7 +403,7 @@
         },
         "codeguard.ghinApiUrl": {
           "type": "string",
-          "default": "https://ghin-api.codeguard.dev",
+          "default": "https://codeguard-ai-cuak.onrender.com",
           "description": "URL of the GHIN Intelligence API. Change for self-hosted enterprise deployments."
         }
       }

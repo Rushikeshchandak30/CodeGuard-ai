@@ -22,3 +22,11 @@ logs/
 
 # OS
 Thumbs.db
+
+# Marketing & Documentation (not needed in repo)
+LINKEDIN_POST.md
+MEDIUM_BLOG.md
+blog-images/
+PROGRESS.md
+PRODUCT_BLUEPRINT.md
+COMPARISON.md
