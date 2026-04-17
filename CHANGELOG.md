@@ -1,6 +1,6 @@
 # Changelog
 
-## [8.0.0] — The "Best-in-World" Release
+## [8.0.0] — The "Best" Release
 
 Ten brand-new detection engines, positioning CodeGuard AI as the most
 complete AI-era security platform.
