@@ -10,7 +10,7 @@ import boto3
 # ── AI Providers ──────────────────────────────────────────────────────────────
 
 # OpenAI (CG_SECRET_001)
-OPENAI_API_KEY = "sk-proj-aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890abcdefghijklmnopqrstuvwxyz12"
+OPENAI_API_KEY = "sk-test-FAKE_OPENAI_KEY_FOR_CODEGUARD_TESTING_ONLY_abc123"
 
 # Anthropic Claude (CG_SECRET_002)
 ANTHROPIC_API_KEY = "sk-ant-api03-FAKEKEYFAKEKEYFAKEKEYFAKEKEYFAKEKEYFAKEKEYFAKEKEYFAKEKEY"
@@ -25,7 +25,7 @@ REPLICATE_API_TOKEN = "r8_FaKeRePlIcAtEtOkEnFaKeRePlIcAtEtOkEn1234"
 GROQ_API_KEY = "gsk_FaKeGrOqApIkEyFaKeGrOqApIkEyFaKeGrOqApIkEy"
 
 # Cohere (CG_SECRET_006)
-COHERE_API_KEY = "FaKeCohEreApIkEyFaKeCohEreApIkEyFaKe1234"
+COHERE_API_KEY = "TEST_FAKE_Cohere_Key_For_CodeGuard_Testing_Only_1234"
 
 # Mistral / Codestral (CG_SECRET_007)
 MISTRAL_API_KEY = "FaKeMiStRaLkEyFaKeMiStRaLkEyFaKeMiStRaLkEy"
@@ -83,10 +83,10 @@ CIRCLECI_TOKEN = "FaKeCiRcLeCiToKeN1234567890abcdefghijklmnopqrstuvwxyz"
 # ── Payment ───────────────────────────────────────────────────────────────────
 
 # Stripe (CG_SECRET_040)
-STRIPE_SECRET_KEY = "sk_live_FaKeStRiPeKeYfAkEsTrIpEkEy1234567890abcde"
+STRIPE_SECRET_KEY = "sk_test_FAKE_TEST_STRIPE_KEY_FOR_CODEGUARD_ONLY_12345"
 
 # Stripe publishable (not secret but still flagged in server-side code)
-STRIPE_PK = "pk_live_FaKeStRiPePublishableKeyFaKe1234567890"
+STRIPE_PK = "pk_test_FAKE_STRIPE_PUB_KEY_FOR_TESTING_ONLY_123456789"
 
 # PayPal (CG_SECRET_041)
 PAYPAL_CLIENT_SECRET = "FaKePayPaLsEcReTfAkEpAyPaLsEcReT1234567890AB"
