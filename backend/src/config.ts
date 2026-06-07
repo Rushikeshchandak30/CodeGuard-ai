@@ -73,6 +73,13 @@ export const config = {
     apiUrl: optional('OSV_API_URL', 'https://api.osv.dev'),
   },
 
+  // Admin account (bootstrapped from env on first start)
+  admin: {
+    email: optional('ADMIN_EMAIL', 'admin@codeguard.ai'),
+    password: optional('ADMIN_PASSWORD', ''),
+    name: optional('ADMIN_NAME', 'CodeGuard Admin'),
+  },
+
   // Feature flags
   isDev: optional('NODE_ENV', 'development') === 'development',
   isProd: optional('NODE_ENV', 'development') === 'production',

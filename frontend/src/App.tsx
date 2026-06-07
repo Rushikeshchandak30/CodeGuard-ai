@@ -10,12 +10,20 @@ import ScanDetail from './pages/ScanDetail';
 import GhinPackages from './pages/GhinPackages';
 import Teams from './pages/Teams';
 import Settings from './pages/Settings';
+import AdminDashboard from './pages/AdminDashboard';
 
 const queryClient = new QueryClient();
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const token = useAuthStore((state) => state.token);
   return token ? <>{children}</> : <Navigate to="/login" />;
+}
+
+function AdminRoute({ children }: { children: React.ReactNode }) {
+  const { token, user } = useAuthStore();
+  if (!token) { return <Navigate to="/login" />; }
+  if (user?.role !== 'ADMIN') { return <Navigate to="/" />; }
+  return <>{children}</>;
 }
 
 export default function App() {
@@ -25,6 +33,15 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
+          {/* Admin route — no Layout wrapper, full-page admin UI */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
           <Route
             path="/*"
             element={

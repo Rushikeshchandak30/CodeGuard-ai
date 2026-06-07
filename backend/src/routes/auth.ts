@@ -9,10 +9,84 @@ import { config } from '../config';
 import { getDb } from '../services/database';
 import { getSupabaseAdmin } from '../services/supabase';
 import { requireAuth } from '../middleware/auth';
-import { generateApiKey } from '../utils/crypto';
+import { generateApiKey, verifyPassword } from '../utils/crypto';
 import { logger } from '../utils/logger';
 
 const router = Router();
+
+// ─── Admin Email/Password Login ──────────────────────────────────────
+
+const adminLoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+/**
+ * POST /api/auth/admin/login
+ * Login with admin email + password defined in .env (ADMIN_EMAIL / ADMIN_PASSWORD).
+ * Returns a JWT with role=ADMIN. No Supabase or GitHub OAuth required.
+ */
+router.post('/admin/login', async (req: Request, res: Response) => {
+  const body = adminLoginSchema.parse(req.body);
+
+  // Check credentials against .env values
+  if (!config.admin.password) {
+    res.status(503).json({ error: { code: 'ADMIN_DISABLED', message: 'Admin login not configured. Set ADMIN_EMAIL and ADMIN_PASSWORD in .env' } });
+    return;
+  }
+
+  if (body.email.toLowerCase() !== config.admin.email.toLowerCase()) {
+    res.status(401).json({ error: { code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' } });
+    return;
+  }
+
+  // Verify password — supports both plaintext (dev) and hashed (prod) stored passwords
+  let passwordOk = false;
+  if (config.admin.password.includes(':')) {
+    // Stored as "salt:hash" from hashPassword()
+    passwordOk = await verifyPassword(body.password, config.admin.password);
+  } else {
+    // Plaintext comparison (dev convenience — remind to hash in prod)
+    passwordOk = body.password === config.admin.password;
+  }
+
+  if (!passwordOk) {
+    res.status(401).json({ error: { code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' } });
+    return;
+  }
+
+  const db = getDb();
+
+  // Upsert admin user record in database with ADMIN role
+  const adminUser = await db.user.upsert({
+    where: { email: config.admin.email },
+    update: { name: config.admin.name, role: 'ADMIN' },
+    create: {
+      email: config.admin.email,
+      name: config.admin.name,
+      role: 'ADMIN',
+    },
+  });
+
+  const token = jwt.sign(
+    { userId: adminUser.id, email: adminUser.email, role: 'ADMIN' },
+    config.jwt.secret,
+    { expiresIn: '12h' }
+  );
+
+  logger.info('Admin login successful', { email: adminUser.email });
+
+  res.json({
+    token,
+    user: {
+      id: adminUser.id,
+      email: adminUser.email,
+      name: adminUser.name,
+      role: 'ADMIN',
+      isAdmin: true,
+    },
+  });
+});
 
 // ─── GitHub OAuth via Supabase ───────────────────────────────────────
 

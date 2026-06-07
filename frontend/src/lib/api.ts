@@ -37,6 +37,8 @@ export const authApi = {
   createApiKey: (name: string) => api.post('/api/auth/api-keys', { name }),
   revokeApiKey: (id: string) => api.delete(`/api/auth/api-keys/${id}`),
   githubLoginUrl: () => `${BASE_URL}/api/auth/github`,
+  adminLogin: (email: string, password: string) =>
+    api.post('/api/auth/admin/login', { email, password }),
 };
 
 // ─── Scans ────────────────────────────────────────────────────────

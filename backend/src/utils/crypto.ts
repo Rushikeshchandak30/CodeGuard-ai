@@ -36,3 +36,33 @@ export function generateWebhookSecret(): string {
 export function signWebhookPayload(payload: string, secret: string): string {
   return crypto.createHmac('sha256', secret).update(payload).digest('hex');
 }
+
+// ─── Password Hashing (admin credentials) ────────────────────────────
+
+/**
+ * Hash a plaintext password using scrypt (Node.js built-in, no extra dep).
+ * Returns "salt:hash" as a single storable string.
+ */
+export async function hashPassword(password: string): Promise<string> {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = await new Promise<string>((resolve, reject) => {
+    crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+      if (err) { reject(err); } else { resolve(derivedKey.toString('hex')); }
+    });
+  });
+  return `${salt}:${hash}`;
+}
+
+/**
+ * Verify a plaintext password against a stored "salt:hash" string.
+ */
+export async function verifyPassword(password: string, stored: string): Promise<boolean> {
+  const [salt, hash] = stored.split(':');
+  if (!salt || !hash) { return false; }
+  const derivedKey = await new Promise<Buffer>((resolve, reject) => {
+    crypto.scrypt(password, salt, 64, (err, key) => {
+      if (err) { reject(err); } else { resolve(key); }
+    });
+  });
+  return crypto.timingSafeEqual(Buffer.from(hash, 'hex'), derivedKey);
+}
