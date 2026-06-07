@@ -1,5 +1,71 @@
 # Changelog
 
+## [9.0.0] — The "Agentic Era" Release
+
+Research-driven update addressing the top 2026 AI security threats:
+- **Socket.dev** hit $1B valuation — market validation of supply chain AI security
+- **Vibe coding crisis** — 45% of LLMs write insecure code (Veracode 2026), 400 exposed secrets in 5,600 vibe-coded apps (Wiz), 74 real CVEs in AI-generated code (Georgia Tech)
+- **Agentic AI threats** — OWASP added ASI01–ASI10 Top 10 for Agentic Applications 2026; memory poisoning has 80%+ attack success rate (BeyondScale research)
+- **#1 exposed secret is now Gemini** — 72% of all exposed AI keys in production apps (RedHunt Labs Project Resonance Wave 15)
+
+### Added — New Detection Engines
+
+#### Agentic AI Security Scanner (`src/checkers/agentic-security-scanner.ts`)
+- **18 rules** across 8 OWASP ASI categories
+- **Memory poisoning (ASI06)** — unsanitized user input to vector stores, RAG retrieval poisoning, instruction override directives in agent memory fields
+- **Tool misuse / privilege escalation (ASI03)** — wildcard permissions (`*`), unrestricted shell access, unbounded iteration limits
+- **Confused deputy (ASI04)** — system prompt concatenated with user input, high trust assigned to external sources
+- **Agent-to-agent injection (ASI07)** — CrewAI/LangGraph/AutoGen unconstrained delegation, multi-agent propagation
+- **Missing human-in-the-loop (ASI01)** — `human_in_the_loop: false`, auto-execute without review, destructive operations without confirmation
+- **Insecure tool registration (ASI08)** — tools fetched from raw GitHub/pastebin URLs, dynamic tool loading without integrity checks
+- **Leaked agent context (ASI02)** — debug scratchpad exposed, full context logging enabled
+- **Autonomous destructive actions** — delete/drop/truncate in allowed operations without confirmation gate
+- Framework detection: AutoGen, CrewAI, LangGraph, OpenAI Agents SDK, Anthropic Computer Use
+- Scans: `agent.json`, `claude-code-config.json`, LangGraph/AutoGen/CrewAI configs, `.agent/`, `*.agent.ts/py`
+
+#### Vibe Code Security Analyzer (`src/checkers/vibe-code-analyzer.ts`)
+- **22 rules** across 13 AI-generated code anti-pattern categories
+- **Security debt scoring** — 0-100 composite score with summary verdict
+- **AI tool attribution** — identifies which AI assistant likely generated the flagged pattern (Copilot, Cursor, ChatGPT, Bolt.new, Lovable, v0)
+- Missing authentication on routes (most common vibe-code gap — Georgia Tech)
+- Missing input validation — LLM happy-path code omits schema validation
+- Missing rate limiting on auth endpoints
+- Missing CSRF protection in Express apps
+- CORS wildcard `*` — "the universal AI boilerplate default"
+- SQL injection via template literal / Python f-string (LLM tutorial anti-pattern)
+- IDOR missing ownership check in CRUD routes
+- Secrets in frontend via `NEXT_PUBLIC_`/`REACT_APP_`/`VITE_` prefix (Wiz finding)
+- Hardcoded API keys in source (400 found in 5,600 vibe-coded apps)
+- Debug `console.log` / `print` of sensitive data
+- JWT with weak placeholder secret / missing expiration
+- TODO security debt comments — 78% never resolved before deploy
+- Missing HTTPS enforcement / HSTS
+
+### Added — Expanded Secrets Coverage (75+ patterns, was 60+)
+
+Based on RedHunt Labs 2026 research (most-exposed AI secrets by volume):
+
+| Provider | Pattern | Why Added |
+|---|---|---|
+| **Google Gemini / AI Studio** | `AIza[0-9A-Za-z]{35}` | **#1 exposed AI key — 72% of all leaks** |
+| **ElevenLabs** | `xi-api-key` context | **#3 exposed — 8% of all leaks** |
+| **OpenRouter** | `sk-or-v1-[A-Za-z0-9]{64}` | Proxies all major LLMs — high-value target |
+| **Vercel AI / v0** | Context pattern | Vibe coding platform default |
+| **Nvidia NIM** | `nvapi-` prefix | Enterprise AI inference |
+| **Stability AI** | `sk-[A-Za-z0-9]{48,56}` | Image generation / diffusion |
+| **Anthropic (expanded)** | `sk-ant-api0[3-9]-` | Updated format for API v3+ |
+| **Meta Llama / Meta AI** | Context pattern | Open-weight model API |
+| **Cerebras AI** | `csk-` prefix | Fast inference platform |
+| **SambaNova** | Context pattern | Enterprise AI |
+| **Supabase Service Role Key** | `eyJ` JWT + supabase context | Full DB bypass — critical vibe-code risk |
+| **Supabase Anon Key (backend)** | `eyJ` JWT + supabase context | RLS bypass warning |
+
+### New VS Code Commands
+- `CodeGuard v9: Scan for Agentic AI Security Issues (OWASP ASI)` — workspace scan with OWASP ASI coverage report
+- `CodeGuard v9: Analyze Vibe Code Security (AI Anti-patterns)` — per-file security debt score + AI tool attribution
+
+---
+
 ## [8.0.0] — The "Best-in-World" Release
 
 Ten brand-new detection engines, positioning CodeGuard AI as the most

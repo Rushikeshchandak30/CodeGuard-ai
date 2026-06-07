@@ -1,8 +1,8 @@
 {
   "name": "codeguard-ai",
   "displayName": "CodeGuard AI — AI-Aware Security Platform",
-  "description": "The most complete AI-era security platform: hallucination detection, MCP CVE scanner, LLM jailbreak detection, ML model (pickle) exploit scanner, IaC/SAST, 60+ secret patterns, typosquat + cryptojacking + license compliance. Real-time, offline-capable, VS Code + CLI + GitHub Action.",
-  "version": "8.0.0",
+  "description": "The most complete AI-era security platform: agentic AI security (OWASP ASI), vibe-code analyzer, MCP CVE scanner, LLM jailbreak detection, ML model exploit scanner, 75+ secret patterns (Gemini/ElevenLabs/OpenRouter), IaC/SAST, typosquat + cryptojacking + license compliance. Real-time, offline-capable, VS Code + CLI + GitHub Action.",
+  "version": "9.0.0",
   "publisher": "codeguard-ai",
   "license": "MIT",
   
@@ -52,7 +52,16 @@
     "JWT",
     "OWASP",
     "SAST",
-    "SCA"
+    "SCA",
+    "agentic-ai-security",
+    "vibe-coding",
+    "memory-poisoning",
+    "OWASP-ASI",
+    "vibe-code-analyzer",
+    "security-debt",
+    "gemini",
+    "supabase",
+    "openrouter"
   ],
   "activationEvents": [
     "onStartupFinished",
@@ -220,6 +229,14 @@
       {
         "command": "codeguard.scanAllV8",
         "title": "CodeGuard v8: Run All New Detection Engines"
+      },
+      {
+        "command": "codeguard.scanAgenticSecurity",
+        "title": "CodeGuard v9: Scan for Agentic AI Security Issues (OWASP ASI)"
+      },
+      {
+        "command": "codeguard.analyzeVibeCode",
+        "title": "CodeGuard v9: Analyze Vibe Code Security (AI Anti-patterns)"
       }
     ],
     "views": {

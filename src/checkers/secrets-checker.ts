@@ -417,6 +417,112 @@ const SECRET_PATTERNS: SecretPattern[] = [
     description: 'Hardcoded New Relic license key detected',
     remediation: 'Move to environment variable: process.env.NEW_RELIC_LICENSE_KEY',
   },
+
+  // ─── v9.0 additions — 2026 highest-exposure AI providers ─────────────
+  // Source: RedHunt Labs Project Resonance Wave 15 — Gemini=72%, ElevenLabs=8%
+  // of all exposed AI API secrets found in vibe-coded apps (5,600 apps scanned by Wiz).
+  {
+    name: 'Google Gemini / AI Studio API Key',
+    pattern: /\bAIza[0-9A-Za-z\-_]{35}\b/,
+    severity: 'critical',
+    description:
+      'Hardcoded Google Gemini / AI Studio API key detected. ' +
+      'This is the #1 most commonly exposed AI secret (72% of all exposed AI keys per RedHunt Labs 2026). ' +
+      'Frequently leaked in vibe-coded frontend apps that hardcode this key.',
+    remediation:
+      'Move to server-side environment variable: process.env.GEMINI_API_KEY or GOOGLE_AI_API_KEY. ' +
+      'Never prefix with NEXT_PUBLIC_, REACT_APP_, or VITE_ — this exposes the key in client bundle.',
+  },
+  {
+    name: 'ElevenLabs API Key',
+    pattern: /(?:elevenlabs|eleven[_\-\s]?labs)[_\-\s]?api[_\-\s]?key\s*[:=]\s*['"]([a-f0-9]{32})['"]?|(?:xi-api-key|xi_api_key)\s*[:=]\s*['"]([a-f0-9]{32})['"]?/i,
+    severity: 'critical',
+    description:
+      'Hardcoded ElevenLabs API key detected. ' +
+      'ElevenLabs keys account for 8% of all exposed AI secrets in vibe-coded apps (RedHunt Labs 2026).',
+    remediation: 'Move to environment variable: process.env.ELEVENLABS_API_KEY',
+  },
+  {
+    name: 'Google Gemini API Key (context pattern)',
+    pattern: /(?:gemini|google[_\-\s]?ai|googleai)[_\-\s]?api[_\-\s]?key\s*[:=]\s*['"]([A-Za-z0-9_\-]{35,45})['"]?/i,
+    severity: 'critical',
+    description: 'Hardcoded Google Gemini API key in context variable assignment detected.',
+    remediation: 'Use GEMINI_API_KEY environment variable. Never hardcode in frontend or commit to git.',
+  },
+  {
+    name: 'OpenRouter API Key',
+    pattern: /\bsk-or-v1-[A-Za-z0-9]{64}\b/,
+    severity: 'critical',
+    description: 'Hardcoded OpenRouter API key detected. OpenRouter proxies many LLM providers — exposure gives access to all.',
+    remediation: 'Move to environment variable: process.env.OPENROUTER_API_KEY',
+  },
+  {
+    name: 'Vercel AI SDK / v0 API Key',
+    pattern: /(?:vercel[_\-\s]?ai|v0)[_\-\s]?(?:api[_\-\s]?)?(?:key|token)\s*[:=]\s*['"]([A-Za-z0-9_\-]{40,})['"]?/i,
+    severity: 'critical',
+    description: 'Hardcoded Vercel AI or v0 API key detected. Common in vibe-coded apps built with v0.dev.',
+    remediation: 'Move to environment variable: process.env.VERCEL_AI_API_KEY',
+  },
+  {
+    name: 'Nvidia NIM API Key',
+    pattern: /(?:nvidia|nim)[_\-\s]?api[_\-\s]?key\s*[:=]\s*['"]([A-Za-z0-9_\-]{60,})['"]?|nvapi-[A-Za-z0-9_\-]{60,}/i,
+    severity: 'critical',
+    description: 'Hardcoded Nvidia NIM / NGC API key detected. Nvidia AI models accessed via NIM platform.',
+    remediation: 'Move to environment variable: process.env.NVIDIA_API_KEY',
+  },
+  {
+    name: 'Stability AI API Key',
+    pattern: /\bsk-[A-Za-z0-9]{48,56}\b/,
+    severity: 'critical',
+    description: 'Hardcoded Stability AI (Stable Diffusion) API key detected.',
+    remediation: 'Move to environment variable: process.env.STABILITY_API_KEY',
+  },
+  {
+    name: 'Anthropic Claude API Key (expanded)',
+    pattern: /\bsk-ant-api0[3-9]-[A-Za-z0-9_\-]{90,110}\b/,
+    severity: 'critical',
+    description: 'Hardcoded Anthropic Claude API key detected.',
+    remediation: 'Move to environment variable: process.env.ANTHROPIC_API_KEY',
+  },
+  {
+    name: 'Meta Llama / Meta AI API Key',
+    pattern: /(?:meta[_\-\s]?(?:ai|llama)|llama[_\-\s]?api)[_\-\s]?(?:api[_\-\s]?)?key\s*[:=]\s*['"]([A-Za-z0-9_\-]{40,})['"]?/i,
+    severity: 'critical',
+    description: 'Hardcoded Meta Llama / Meta AI API key detected.',
+    remediation: 'Move to environment variable: process.env.META_AI_API_KEY',
+  },
+  {
+    name: 'Cerebras AI API Key',
+    pattern: /(?:cerebras)[_\-\s]?api[_\-\s]?key\s*[:=]\s*['"]([A-Za-z0-9_\-]{32,})['"]?|csk-[A-Za-z0-9]{48,}/i,
+    severity: 'critical',
+    description: 'Hardcoded Cerebras AI API key detected.',
+    remediation: 'Move to environment variable: process.env.CEREBRAS_API_KEY',
+  },
+  {
+    name: 'SambaNova API Key',
+    pattern: /(?:sambanova|samba[_\-\s]?nova)[_\-\s]?api[_\-\s]?key\s*[:=]\s*['"]([A-Za-z0-9_\-]{40,})['"]?/i,
+    severity: 'critical',
+    description: 'Hardcoded SambaNova API key detected.',
+    remediation: 'Move to environment variable: process.env.SAMBANOVA_API_KEY',
+  },
+  {
+    name: 'Supabase Service Role Key',
+    pattern: /(?:supabase)[_\-\s]?(?:service[_\-\s]?role[_\-\s]?)?key\s*[:=]\s*['"]eyJ[A-Za-z0-9_\-]{100,}/i,
+    severity: 'critical',
+    description:
+      'Hardcoded Supabase service role key detected. Service role keys bypass Row Level Security — ' +
+      'exposure gives full database access. Extremely common in vibe-coded apps.',
+    remediation:
+      'NEVER use service role key in frontend code. Use anon key with RLS for client-side. ' +
+      'Service role key must only be used server-side in environment variables.',
+  },
+  {
+    name: 'Supabase Anon Key (in backend)',
+    pattern: /(?:supabase)[_\-\s]?(?:anon|public)[_\-\s]?key\s*[:=]\s*['"]eyJ[A-Za-z0-9_\-]{100,}/i,
+    severity: 'medium',
+    description: 'Supabase anon key detected in source code. Safe for frontend use only with RLS enabled.',
+    remediation: 'Ensure Row Level Security (RLS) is enabled on all Supabase tables. Never use anon key in backend logic that bypasses RLS.',
+  },
 ];
 
 // Lines to skip (common false positives)

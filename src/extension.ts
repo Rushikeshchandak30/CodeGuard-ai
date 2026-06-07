@@ -56,6 +56,9 @@ import { scanIacFile, detectIacFramework, getIacScannerStats } from './checkers/
 import { scanFileForApiSec, getApiSecScannerStats } from './checkers/api-security-scanner';
 import { analyzePublishHistory, getPublishAnomalyStats } from './intelligence/publish-anomaly';
 import { getMaintainerEngineStats } from './intelligence/maintainer-reputation';
+// v9 imports — agentic AI & vibe coding security engines
+import { scanWorkspaceForAgentSecurity, getAgentSecScannerStats } from './checkers/agentic-security-scanner';
+import { scanFileForVibeCode, calculateSecurityDebt, getVibeCodeAnalyzerStats } from './checkers/vibe-code-analyzer';
 
 let watcher: DocumentWatcher | undefined;
 let cache: Cache | undefined;
@@ -1257,6 +1260,97 @@ function activateCore(context: vscode.ExtensionContext) {
       ].join('\n');
       const panel = vscode.window.createWebviewPanel('codeguardV8', 'CodeGuard v8.0 Full Scan', vscode.ViewColumn.One, {});
       panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
+    })
+  );
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // v9.0 Commands — Agentic AI & Vibe Code Security
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Agentic AI Security Scan
+  context.subscriptions.push(
+    vscode.commands.registerCommand('codeguard.scanAgenticSecurity', async () => {
+      if (!vscode.workspace.workspaceFolders) {
+        vscode.window.showWarningMessage('CodeGuard: No workspace open.');
+        return;
+      }
+      await vscode.window.withProgress(
+        { location: vscode.ProgressLocation.Notification, title: 'CodeGuard v9: Scanning for Agentic AI Security Issues…', cancellable: false },
+        async () => {
+          const findings = await scanWorkspaceForAgentSecurity(vscode.workspace.workspaceFolders!);
+          const stats = getAgentSecScannerStats();
+          const critical = findings.filter(f => f.severity === 'critical').length;
+          const high = findings.filter(f => f.severity === 'high').length;
+          const md = [
+            `# 🤖 Agentic AI Security Scan — CodeGuard v9.0`,
+            ``,
+            `**Engine Stats:** ${stats.totalRules} rules | OWASP ASI coverage: ${stats.owaspCoverage.join(', ')}`,
+            `**Categories:** ${stats.categories.join(', ')}`,
+            ``,
+            `## Results`,
+            `**Total findings:** ${findings.length} (${critical} critical, ${high} high)`,
+            ``,
+            findings.length === 0
+              ? '✅ No agentic security issues found.'
+              : findings.map(f =>
+                  `### [${f.severity.toUpperCase()}] ${f.title}\n` +
+                  `**Rule:** ${f.ruleId} | **OWASP:** ${f.owaspAsi || 'N/A'} | **File:** ${f.file}:${f.line}\n\n` +
+                  `${f.detail}\n\n**Remediation:** ${f.remediation}\n\n**Evidence:** \`${f.evidence}\``
+                ).join('\n\n---\n\n'),
+          ].join('\n');
+          const panel = vscode.window.createWebviewPanel('codeguardAgentSec', 'Agentic AI Security Report', vscode.ViewColumn.One, {});
+          panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
+        }
+      );
+    })
+  );
+
+  // Vibe Code Security Analysis
+  context.subscriptions.push(
+    vscode.commands.registerCommand('codeguard.analyzeVibeCode', async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
+        vscode.window.showWarningMessage('CodeGuard: No active file open.');
+        return;
+      }
+      await vscode.window.withProgress(
+        { location: vscode.ProgressLocation.Notification, title: 'CodeGuard v9: Analyzing Vibe Code Security…', cancellable: false },
+        async () => {
+          const content = editor.document.getText();
+          const filePath = editor.document.uri.fsPath;
+          const findings = scanFileForVibeCode(filePath, content);
+          const debtReport = calculateSecurityDebt(findings);
+          const analyzerStats = getVibeCodeAnalyzerStats();
+          const md = [
+            `# 🎭 Vibe Code Security Analysis — CodeGuard v9.0`,
+            ``,
+            `**File:** ${filePath}`,
+            `**Engine:** ${analyzerStats.totalRules} rules across ${analyzerStats.categories.length} AI anti-pattern categories`,
+            ``,
+            `## Security Debt Score: ${debtReport.debtScore}/100`,
+            ``,
+            debtReport.summary,
+            ``,
+            `**Findings:** ${debtReport.totalFindings} total | ${debtReport.criticalCount} critical | ${debtReport.highCount} high | ${debtReport.mediumCount} medium`,
+            debtReport.aiPatterns.length > 0 ? `**Likely AI tools:** ${debtReport.aiPatterns.join(', ')}` : '',
+            ``,
+            `## Top Issue Categories`,
+            ...debtReport.topCategories.map(c => `- **${c.category}**: ${c.count} finding(s)`),
+            ``,
+            `## All Findings`,
+            findings.length === 0
+              ? '✅ No vibe-code security anti-patterns detected.'
+              : findings.map(f =>
+                  `### [${f.severity.toUpperCase()}] ${f.title}\n` +
+                  `**Rule:** ${f.ruleId} | **Category:** ${f.category} | **Line:** ${f.line}\n` +
+                  (f.aiPattern ? `**Commonly generated by:** ${f.aiPattern}\n\n` : '\n') +
+                  `${f.detail}\n\n**Remediation:** ${f.remediation}\n\n**Evidence:** \`${f.evidence}\``
+                ).join('\n\n---\n\n'),
+          ].join('\n');
+          const panel = vscode.window.createWebviewPanel('codeguardVibe', 'Vibe Code Security Report', vscode.ViewColumn.One, {});
+          panel.webview.html = `<!DOCTYPE html><html><body style="font-family:system-ui;padding:20px;">${simpleMarkdownToHtml(escapeHtml(md))}</body></html>`;
+        }
+      );
     })
   );
 
