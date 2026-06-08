@@ -1,6 +1,8 @@
 # CodeGuard AI — Complete Setup Guide (0 → Production)
 ### From Zero to Fully Deployed in 30 Minutes
 
+> **Version: 9.0.0** | Includes Agentic AI Security (OWASP ASI), Vibe Code Analyzer, Admin Dashboard
+
 ---
 
 ## 📋 What You'll Build
@@ -214,6 +216,12 @@ RESEND_API_KEY=re_your-key
 # JWT Secret (from Step 2.3)
 JWT_SECRET=your-64-char-hex-string
 
+# Admin Account (v9.0) — logs in at /login → Administrator tab
+# IMPORTANT: Change these before deploying to production!
+ADMIN_EMAIL=admin@codeguard.ai
+ADMIN_PASSWORD=CodeGuard@Admin2026
+ADMIN_NAME=CodeGuard Administrator
+
 # Server config
 PORT=3000
 NODE_ENV=development
@@ -275,19 +283,19 @@ npm run dev
 
 **Expected output:**
 ```
-🚀 CodeGuard AI Backend v7.2.0
+🚀 CodeGuard AI Backend v9.0.0
 📡 Server running on http://localhost:3000
 ✅ Database connected
 ✅ Redis connected (or ⚠️ Redis disabled if not configured)
-🔐 Auth: GitHub OAuth + API Keys + JWT
+🔐 Auth: GitHub OAuth + Admin email/password + API Keys + JWT
 ```
 
 **Test it:** Open http://localhost:3000/health in your browser
 ```json
 {
   "status": "ok",
-  "version": "7.2.0",
-  "timestamp": "2026-04-02T07:30:00.000Z"
+  "version": "9.0.0",
+  "timestamp": "2026-06-08T07:30:00.000Z"
 }
 ```
 
@@ -337,7 +345,7 @@ npm run compile
 vsce package
 ```
 
-**Output:** `codeguard-ai-7.0.0.vsix` (or similar)
+**Output:** `codeguard-ai-9.0.0.vsix`
 
 ---
 
@@ -345,11 +353,11 @@ vsce package
 
 **Option 1 — Drag & Drop:**
 1. Open VS Code
-2. Drag `codeguard-ai-7.0.0.vsix` into the VS Code window
+2. Drag `codeguard-ai-9.0.0.vsix` into the VS Code window
 
 **Option 2 — Command:**
 ```bash
-code --install-extension codeguard-ai-7.0.0.vsix
+code --install-extension codeguard-ai-9.0.0.vsix
 ```
 
 ---
@@ -360,11 +368,11 @@ code --install-extension codeguard-ai-7.0.0.vsix
 1. Open Windsurf
 2. Extensions panel (`Ctrl+Shift+X`)
 3. Click `...` menu → **Install from VSIX...**
-4. Select `codeguard-ai-7.0.0.vsix`
+4. Select `codeguard-ai-9.0.0.vsix`
 
 **Method 2 — Command:**
 ```bash
-windsurf --install-extension codeguard-ai-7.0.0.vsix
+windsurf --install-extension codeguard-ai-9.0.0.vsix
 ```
 
 ---
@@ -372,7 +380,7 @@ windsurf --install-extension codeguard-ai-7.0.0.vsix
 ### Step 4.5: Install in Cursor
 
 ```bash
-cursor --install-extension codeguard-ai-7.0.0.vsix
+cursor --install-extension codeguard-ai-9.0.0.vsix
 ```
 
 Or use the same UI method as Windsurf.
@@ -390,9 +398,10 @@ Or use the same UI method as Windsurf.
    > ⚠️ Hallucinated package detected: faker-colors-js (NPM)
 
 4. Open Command Palette (`Ctrl+Shift+P`) and run:
-   - `CodeGuard AI: Open Dashboard`
-   - `CodeGuard AI: Scan Current File`
-   - `CodeGuard AI: Scan MCP Servers`
+   - `CodeGuard: Scan Current File`
+   - `CodeGuard: Scan MCP Server Configurations`
+   - `CodeGuard v9: Analyze Vibe Code Security (AI Anti-patterns)`
+   - `CodeGuard v9: Scan for Agentic AI Security Issues (OWASP ASI)`
 
 ---
 
@@ -467,7 +476,7 @@ Expected:
 ```json
 {
   "status": "ok",
-  "version": "7.2.0"
+  "version": "9.0.0"
 }
 ```
 
@@ -493,10 +502,16 @@ Expected:
 
 ### Frontend Login
 
+**Developer login (GitHub OAuth):**
 1. Open your frontend URL (e.g. `https://your-app.vercel.app`)
-2. Click **Continue with GitHub**
+2. Click the **Developer** tab → **Continue with GitHub**
 3. Authorize the app
 4. You should see the dashboard with stats
+
+**Admin login:**
+1. Click the **Administrator** tab (amber)
+2. Enter `ADMIN_EMAIL` and `ADMIN_PASSWORD` from your `.env`
+3. You are redirected to `/admin` — the system stats dashboard
 
 ---
 
@@ -572,10 +587,13 @@ jobs:
 - [ ] Backend deployed to Railway/Render
 - [ ] Frontend deployed to Vercel/Netlify
 - [ ] Database seeded with initial data
-- [ ] GitHub OAuth working (can log in to dashboard)
+- [ ] GitHub OAuth working (developer login)
+- [ ] Admin login working (`/login` → Administrator tab → `/admin` dashboard)
 - [ ] Extension connected to backend (GHIN API URL set)
 - [ ] CLI installed globally
 - [ ] GitHub Action added to repos
+- [ ] `CodeGuard v9: Analyze Vibe Code Security` tested on a project file
+- [ ] `CodeGuard v9: Scan for Agentic AI Security Issues` tested on agent configs
 
 ---
 

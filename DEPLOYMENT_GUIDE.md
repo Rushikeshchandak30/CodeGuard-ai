@@ -1,6 +1,6 @@
 # CodeGuard AI — Deployment Guide
 
-> Step-by-step instructions to get the backend online, from zero to production.
+> **Version:** 9.0.0 | Step-by-step instructions to get the backend online, from zero to production.
 
 ---
 
@@ -171,6 +171,13 @@ DIRECT_URL=postgresql://postgres.[ref]:[password]@aws-0-us-east-1.pooler.supabas
 GITHUB_CLIENT_ID=Ov23li...
 GITHUB_CLIENT_SECRET=abc123...
 JWT_SECRET=your-64-char-hex-from-step-5
+
+# ─── Admin Account ────────────────────────────────────────
+# Login at /login → Administrator tab (bypasses GitHub OAuth)
+# IMPORTANT: Change these before deploying to production!
+ADMIN_EMAIL=admin@codeguard.ai
+ADMIN_PASSWORD=CodeGuard@Admin2026
+ADMIN_NAME=CodeGuard Administrator
 
 # ─── Optional ─────────────────────────────────────────────
 UPSTASH_REDIS_REST_URL=https://[your-redis].upstash.io

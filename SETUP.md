@@ -1,6 +1,6 @@
 # CodeGuard AI — Setup & Local Run Guide
 
-> **Version:** 7.0.0 | **Last Updated:** 2026-03-20
+> **Version:** 9.0.0 | **Last Updated:** 2026-06-08
 
 ---
 
@@ -52,8 +52,10 @@ codeguard-ai/
 ├── src/                        # Extension source (TypeScript)
 │   ├── extension.ts            # Entry point — activates all modules
 │   ├── ai/                     # AI attribution, chat, intent verifier
-│   ├── checkers/               # Hallucination, secrets, vulnerability checkers
-│   ├── dashboard/              # Team dashboard (webview)
+│   ├── checkers/               # 19 detection engines incl. agentic + vibe-code (v9)
+│   │   ├── agentic-security-scanner.ts   # NEW v9 — OWASP ASI01-ASI08
+│   │   ├── vibe-code-analyzer.ts         # NEW v9 — 22 AI anti-pattern rules
+│   │   └── secrets-checker.ts            # 75+ patterns incl. Gemini, ElevenLabs
 │   ├── intelligence/           # GHIN network, trust scoring
 │   ├── parsers/                # JS, Python, Go import parsers
 │   ├── policy/                 # Policy-as-Code engine
@@ -266,7 +268,7 @@ Full scan (all scanners enabled):
   MCP issues:         4
   Policy violations:  1
 
-  FAIL — CodeGuard AI v7.0.0
+  FAIL — CodeGuard AI v9.0.0
 ```
 
 MCP-only scan (all other scanners disabled):
@@ -284,7 +286,7 @@ node dist/index.js scan ..\test-samples --no-hallucination --no-vulnerabilities 
   HIGH      MCP  MCP server "risky-remote" uses npx (rug-pull risk).
   HIGH      MCP  MCP server "web-search" connects over unencrypted HTTP.
 
-  FAIL — CodeGuard AI v7.0.0
+  FAIL — CodeGuard AI v9.0.0
 ```
 
 ---
@@ -301,12 +303,14 @@ npm run compile
 
 # Package
 npm run package
-# → generates: codeguard-ai-7.0.0.vsix
+# → generates: codeguard-ai-9.0.0.vsix
 ```
 
 ### Install the VSIX in any VS Code instance
 ```powershell
-code --install-extension codeguard-ai-7.0.0.vsix
+code --install-extension codeguard-ai-9.0.0.vsix
+# or for Windsurf / Cursor:
+windsurf --install-extension codeguard-ai-9.0.0.vsix
 ```
 
 Or in VS Code: **Extensions (Ctrl+Shift+X)** → **...** menu → **Install from VSIX...**
@@ -372,23 +376,34 @@ Create `<your-project>/.codeguard/policy.json`:
 
 ### All VS Code Commands (Ctrl+Shift+P)
 
-| Command | Description |
-|---------|-------------|
-| `CodeGuard: Scan Current File` | SAST + secrets + hallucination on open file |
-| `CodeGuard: Scan Entire Workspace` | Full workspace scan with progress |
-| `CodeGuard: Scan MCP Server Configurations` | Scan all mcp.json / MCP configs for security issues |
-| `CodeGuard: Discover Shadow AI (AI-SBOM)` | Find all AI tools, SDKs, model files in workspace |
-| `CodeGuard: Export AI-SBOM (JSON)` | Save AI inventory as JSON file |
-| `CodeGuard: Check Package Hallucination` | Check a specific package name |
-| `CodeGuard: Generate SBOM` | Generate CycloneDX 1.5 SBOM |
-| `CodeGuard: Export Compliance Report` | Markdown/CSV/JSON compliance report |
-| `CodeGuard: Evaluate Policy` | Run policy check against current workspace state |
-| `CodeGuard: Create Default Policy` | Create `.codeguard/policy.json` with secure defaults |
-| `CodeGuard: Show Team Dashboard` | Open React team dashboard webview |
-| `CodeGuard: Verify Package Provenance` | Check Sigstore / PEP 740 attestation |
-| `CodeGuard: Show Trust Score` | Show composite trust score breakdown |
-| `CodeGuard: Save SBOM Baseline` | Snapshot current SBOM for drift detection |
-| `CodeGuard: Show Security Score` | Display project posture score (0-100) |
+| Command | Version | Description |
+|---------|---------|-------------|
+| `CodeGuard: Scan Current File` | Core | SAST + secrets + hallucination on open file |
+| `CodeGuard: Scan Workspace Dependencies` | Core | Full dependency audit |
+| `CodeGuard: Scan MCP Server Configurations` | Core | Scan all mcp.json / MCP configs for security issues |
+| `CodeGuard: Discover Shadow AI (AI-SBOM)` | Core | Find all AI tools, SDKs, model files in workspace |
+| `CodeGuard: Export AI-SBOM (JSON)` | Core | Save AI inventory as JSON file |
+| `CodeGuard: GHIN Hallucination Database Stats` | Core | Show GHIN hallucination DB stats |
+| `CodeGuard: Generate SBOM (CycloneDX)` | Core | Generate CycloneDX 1.5 SBOM |
+| `CodeGuard: Export Compliance Report (CSV/Markdown/JSON)` | Core | SOC2/PCI/HIPAA report |
+| `CodeGuard: Evaluate Security Policy` | Core | Run `.codeguard/policy.json` check |
+| `CodeGuard: Create Default Policy File` | Core | Create `.codeguard/policy.json` with secure defaults |
+| `CodeGuard: Scan for Hardcoded Secrets` | Core | 75+ pattern secrets scan |
+| `CodeGuard: Scan for Code Vulnerabilities (SAST)` | Core | Regex SAST engine |
+| `CodeGuard: Deep SAST Scan (LLM + Adversarial)` | Core | 3-pass hybrid SAST |
+| `CodeGuard: Check Package Provenance (Sigstore)` | Core | Verify Sigstore / PEP 740 attestation |
+| `CodeGuard: Show Security Score` | Core | Display project posture score (0-100) |
+| `CodeGuard: Save SBOM Baseline` | Core | Snapshot current SBOM for drift detection |
+| `CodeGuard: Detect Dependency Drift (SBOM)` | Core | Compare current vs baseline SBOM |
+| `CodeGuard: Run Patch Agent (Auto-fix)` | Core | Autonomous CVE patch agent |
+| `CodeGuard: Scan AI Config Files for Attacks` | Core | Scan `.cursorrules`, `CLAUDE.md` etc. |
+| `CodeGuard v8: Scan for LLM Jailbreak Patterns` | v8.0 | Workspace-wide jailbreak scan |
+| `CodeGuard v8: Scan ML Model Files (Pickle/ONNX/Keras)` | v8.0 | ML exploit detection |
+| `CodeGuard v8: Check Package for Typosquat Risk` | v8.0 | 10-signal typosquat check |
+| `CodeGuard v8: Scan MCP Servers Against CVE Database` | v8.0 | MCP CVE DB lookup |
+| `CodeGuard v8: Run All New Detection Engines` | v8.0 | All v8 engines in one pass |
+| **`CodeGuard v9: Scan for Agentic AI Security Issues (OWASP ASI)`** | **v9.0** | **OWASP ASI01–ASI08 scan + report** |
+| **`CodeGuard v9: Analyze Vibe Code Security (AI Anti-patterns)`** | **v9.0** | **22-rule debt score + AI attribution** |
 
 ---
 
@@ -611,7 +626,40 @@ node cli/dist/index.js scan . --format json | ConvertFrom-Json | Select-Object -
 
 ---
 
-## 16. Troubleshooting
+## 16. Admin Account Setup
+
+The web dashboard includes an **Administrator** login that bypasses GitHub OAuth.
+
+### Step 1 — Add credentials to `backend/.env`
+```env
+ADMIN_EMAIL=admin@codeguard.ai
+ADMIN_PASSWORD=CodeGuard@Admin2026
+ADMIN_NAME=CodeGuard Administrator
+```
+
+### Step 2 — Start the backend
+```powershell
+cd backend
+npm run dev
+```
+
+### Step 3 — Login
+1. Navigate to `http://localhost:5173/login`
+2. Click the **Administrator** tab (amber colour)
+3. Enter the email and password from your `.env`
+4. You are redirected to `/admin` — the full system stats dashboard
+
+### Admin Dashboard shows:
+- Total users, scans, teams, active API keys
+- GHIN top-reported hallucinated packages
+- Live feature flag toggles
+- Server uptime, memory usage, Node.js version
+
+> **Production tip:** Use `hashPassword()` from `backend/src/utils/crypto.ts` to store a hashed password in `ADMIN_PASSWORD` instead of plaintext.
+
+---
+
+## 17. Troubleshooting
 
 ### `"Cannot find module 'vscode'"` in CLI
 The CLI is vscode-free by design. This error means you're importing from `src/` (which has VS Code deps) instead of `cli/src/`. Always use `cli/dist/index.js`.

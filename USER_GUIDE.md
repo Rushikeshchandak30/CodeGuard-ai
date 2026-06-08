@@ -1,6 +1,6 @@
 # CodeGuard AI — Complete User Guide
 
-> **Version:** 7.0.0 | **Audience:** First-time users, developers, security engineers, team leads
+> **Version:** 9.0.0 | **Audience:** First-time users, developers, security engineers, team leads
 
 ---
 
@@ -39,13 +39,15 @@ CodeGuard AI catches all of this — **in real-time as you code**, and **in CI/C
 
 ### What makes it different from existing tools?
 
-| Existing Tools (Snyk, SonarQube, etc.) | CodeGuard AI |
-|-----------------------------------------|--------------|
+| Existing Tools (Snyk, SonarQube, etc.) | CodeGuard AI v9.0 |
+|-----------------------------------------|------------------|
 | Scan for CVEs in real packages | ✅ Also detects **hallucinated packages** that don't exist yet |
 | Source code SAST | ✅ Also scans **AI config files** for attack injection |
 | Supply chain security | ✅ Also scans **MCP server configs** for tool poisoning |
 | Generic SBOM | ✅ Also generates **AI-SBOM** (what AI tools are in your project) |
 | No AI awareness | ✅ **Tracks which code was AI-generated** vs human-written |
+| No agentic security | ✅ **OWASP ASI01–ASI08** — memory poisoning, tool misuse, confused deputy |
+| No vibe-code detection | ✅ **22 rules** for AI-generated code gaps — missing auth, CORS `*`, JWT flaws |
 
 ---
 
